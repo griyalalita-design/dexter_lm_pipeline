@@ -34,7 +34,30 @@ GSHEET = {
             
         },
     },
-    
+
+    "tracker_sum": {
+        "url": "https://docs.google.com/spreadsheets/d/1RnOlEcK1DBiutWlrrHGAj58zDLwjw6-PJLJoxLoaXPo/edit?gid=0#gid=0",
+        "sheet_id": "1RnOlEcK1DBiutWlrrHGAj58zDLwjw6-PJLJoxLoaXPo",  # ambil dari URL
+        "tabs": {
+            "raw_data_cost": "Raw Data [Cost]",
+            "raw_data_int_comp" : "Raw Data [Int & Comp]",
+            "raw_data_otif": "Raw Data [OTIF]",
+            "hub":  "[Upload] Hub",
+            "staff_list": "List Staff",
+            "mapping_area": "Mapping Area",
+            "master_tracker_by_hub": "Master Tracker by Hub",
+        },
+        # Range yang di-clear saat Day 1 (sesuaikan)
+        "clear_ranges": {
+            "raw_data_cost": ["H6:H", "K6:K", "O6:P","V6:W","AA6:AD"],
+            "raw_data_int_comp": ["B5:E", "I5:L", "V5:Y", "AB5:AE"],
+            "raw_data_otif": ["B5:E","H5:K","AJ5:AM","AP5:AS","AW5:AZ","BC5:BF","BI5:BL"],
+            "hub" :["A4:M"],
+            "staff_list":["L4:S","V4:AC"],
+            "mapping_area":["B5:J"]
+            
+        },
+    },
    # Gsheet PNS - sumber list shipper (JANGAN diedit, read only)
     "pns": {
         "url": "https://docs.google.com/spreadsheets/d/15ndhmW4gtQ14uMwMOl33IZ1iS67qQTFEaFhWr-UF7Ns/edit?gid=218596977#gid=218596977",
@@ -82,6 +105,14 @@ GSHEET = {
     },
 
     "ic_spv_staff_list": {
+        "url": "https://docs.google.com/spreadsheets/d/1waQW82trBo9g3PWo5eSQX-Quz-9q7Q6rZ7ZGZkZIXOk/edit?gid=77217638#gid=77217638",
+        "sheet_id": "1waQW82trBo9g3PWo5eSQX-Quz-9q7Q6rZ7ZGZkZIXOk",
+        "tabs": {
+            "pkwt_pkwtt": "PKWT&PKWTT New Month",
+        },
+    },
+
+    "mapping_area": {
         "url": "https://docs.google.com/spreadsheets/d/1waQW82trBo9g3PWo5eSQX-Quz-9q7Q6rZ7ZGZkZIXOk/edit?gid=77217638#gid=77217638",
         "sheet_id": "1waQW82trBo9g3PWo5eSQX-Quz-9q7Q6rZ7ZGZkZIXOk",
         "tabs": {
