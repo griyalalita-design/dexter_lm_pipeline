@@ -90,14 +90,6 @@ GSHEET = {
         "start_cell": "A2",
     },
 
-    # Gsheet DWS dari tim Sort
-    "dws": {
-        "url": "https://docs.google.com/spreadsheets/d/1wm7fyvG_AMlK8U2gCBKDr0_Hb_17fFKW21373vjf2xM/edit?gid=0#gid=0",
-        "sheet_id": "1wm7fyvG_AMlK8U2gCBKDr0_Hb_17fFKW21373vjf2xM",
-        "tabs": {
-            "main": "Pivot", # sesuaikan nama tab
-        }
-    },
 
     # Gsheet CPP dari tim PSP
     "cpp": {
@@ -109,7 +101,7 @@ GSHEET = {
     },
 
     # Gsheet staff list dari SORT
-    "staff_list": {
+    "freelance_list": {
         "url": "https://docs.google.com/spreadsheets/d/1s4BQ2TJYxxY-BttqgHvB185ONZlQ36pc0Bkz5NooSTU/edit?gid=664145533#gid=664145533",
         "sheet_id": "1s4BQ2TJYxxY-BttqgHvB185ONZlQ36pc0Bkz5NooSTU",
         "tabs": {
