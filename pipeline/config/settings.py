@@ -35,35 +35,7 @@ GSHEET = {
         },
     },
     
-    # Gsheet sanggahan
-    "sanggahan": {
-        "url": "https://docs.google.com/spreadsheets/d/1q1CkYFiZQKRvfYDjZGOJmqNOndbH3hd7Du_Pq0Wn7AU/edit?gid=1000001726#gid=1000001726",
-        "sheet_id": "1q1CkYFiZQKRvfYDjZGOJmqNOndbH3hd7Du_Pq0Wn7AU",
-        "tabs": {
-            "poa_iv_b2b_all_b2c_cold": "POA IV B2B All & B2C Cold",
-            "poa_iv_keyshipper": "POA IV Keyshipper" ,
-            "poa_iv_others": "POA IV Others",
-            "lnd_rate_b2b_all_b2c_cold": "LnD Rate B2B All & B2C Cold",
-            "lnd_rate_keyshipper" : "LnD Rate Keyshipper",
-            "lnd_rate_others":"LnD Rate Others",
-            "dws":"DWS",
-            "cpp":"CPP"
-              # sesuaikan nama tab
-        },
-        # Range yang di-clear di semua tab sanggahan (sesuaikan)
-        "clear_ranges": {
-              "poa_iv_b2b_all_b2c_cold": ["A3:G"],
-              "poa_iv_keyshipper": ["A3:G"],
-              "poa_iv_others": ["A3:G"],
-              "lnd_rate_b2b_all_b2c_cold": ["A3:C"],
-              "lnd_rate_keyshipper": ["A3:C"],
-              "lnd_rate_others": ["A3:C"],
-              "dws" : ["A3:F"],
-              "cpp":["A3:K"]
-        }
-    },
-
- # Gsheet PNS - sumber list shipper (JANGAN diedit, read only)
+   # Gsheet PNS - sumber list shipper (JANGAN diedit, read only)
     "pns": {
         "url": "https://docs.google.com/spreadsheets/d/15ndhmW4gtQ14uMwMOl33IZ1iS67qQTFEaFhWr-UF7Ns/edit?gid=218596977#gid=218596977",
         "sheet_id": "15ndhmW4gtQ14uMwMOl33IZ1iS67qQTFEaFhWr-UF7Ns",
@@ -101,11 +73,19 @@ GSHEET = {
     },
 
     # Gsheet staff list dari SORT
-    "freelance_list": {
-        "url": "https://docs.google.com/spreadsheets/d/1s4BQ2TJYxxY-BttqgHvB185ONZlQ36pc0Bkz5NooSTU/edit?gid=664145533#gid=664145533",
-        "sheet_id": "1s4BQ2TJYxxY-BttqgHvB185ONZlQ36pc0Bkz5NooSTU",
+    "ks7_list": {
+        "url": "https://docs.google.com/spreadsheets/d/1ElOYSi4MwkSL9VOKQ8sMAgPdnpPg8ORJWCdTxoRhTjg/edit?gid=1149250797#gid=1149250797",
+        "sheet_id": "1ElOYSi4MwkSL9VOKQ8sMAgPdnpPg8ORJWCdTxoRhTjg",
         "tabs": {
             "main": "USE THIS",
+        },
+    },
+
+    "ic_spv_staff_list": {
+        "url": "https://docs.google.com/spreadsheets/d/1waQW82trBo9g3PWo5eSQX-Quz-9q7Q6rZ7ZGZkZIXOk/edit?gid=77217638#gid=77217638",
+        "sheet_id": "1waQW82trBo9g3PWo5eSQX-Quz-9q7Q6rZ7ZGZkZIXOk",
+        "tabs": {
+            "pkwt_pkwtt": "PKWT&PKWTT New Month",
         },
     },
 
