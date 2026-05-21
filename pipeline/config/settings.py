@@ -114,14 +114,67 @@ GSHEET = {
 
 
     # Gsheet CPP dari tim PSP
-    "cpp": {
-        "url": "https://docs.google.com/spreadsheets/d/155VQIcpKGH9Lbd3XUOWbzCxXUTFj8l8tMnU6t1NXitw/edit?gid=0#gid=0",
-        "sheet_id": "155VQIcpKGH9Lbd3XUOWbzCxXUTFj8l8tMnU6t1NXitw",
+    "lm_cost": {
+        "url": "https://docs.google.com/spreadsheets/d/1rXE9SdjCRppdN0Zfp2YYhB84PMst_-PM0NMygtg0ifY/edit?gid=848641983#gid=848641983",
+        "sheet_id": "1rXE9SdjCRppdN0Zfp2YYhB84PMst_-PM0NMygtg0ifY",
         "tabs": {
             "main": "USE THIS", # sesuaikan nama tab
         }
     },
 
+    # Gsheet CPP dari tim PSP
+    "hub_mp_cost": {
+        "url": "https://docs.google.com/spreadsheets/d/1Y_1X89Wg0CvJE9HerIZQTQMkUpwPouqjIeuUPqUACRc/edit?gid=1936719192#gid=1936719192",
+        "sheet_id": "1Y_1X89Wg0CvJE9HerIZQTQMkUpwPouqjIeuUPqUACRc",
+        "tabs": {
+            "main": "USE THIS", # sesuaikan nama tab
+        }
+    },
+
+    # Gsheet CPP dari tim PSP
+    "vol": {
+        "url": "https://docs.google.com/spreadsheets/d/1SfuuEEld68rTpGtsoufTGfpgo0k9SljoZJ5hdHR7_t0/edit?gid=0#gid=0",
+        "sheet_id": "1SfuuEEld68rTpGtsoufTGfpgo0k9SljoZJ5hdHR7_t0",
+        "tabs": {
+            "main": "USE THIS", # sesuaikan nama tab
+        }
+    },
+
+    # Gsheet CPP dari tim PSP
+    "over_mp_fte": {
+        "url": "https://docs.google.com/spreadsheets/d/1wUI1qnWDDCBC8Ypkfp-0Rm58_9aTxCNyhNrkk1gRXNc/edit?gid=0#gid=0",
+        "sheet_id": "1wUI1qnWDDCBC8Ypkfp-0Rm58_9aTxCNyhNrkk1gRXNc",
+        "tabs": {
+            "main": "USE THIS", # sesuaikan nama tab
+        }
+    },
+
+    # Gsheet CPP dari tim PSP
+    "data_logger": {
+        "url": "https://docs.google.com/spreadsheets/d/10lFwKkk1lRQc6pmkUFrChUcm0gScgEkN0jOMSr6Lnfs/edit?gid=0#gid=0",
+        "sheet_id": "10lFwKkk1lRQc6pmkUFrChUcm0gScgEkN0jOMSr6Lnfs",
+        "tabs": {
+            "main": "USE THIS", # sesuaikan nama tab
+        }
+    },
+
+    # Gsheet CPP dari tim PSP
+    "poda_agg": {
+        "url": "https://docs.google.com/spreadsheets/d/1afI8LtKVwGPkFie2UH5EOzdBkNdlgfxq4iySuo_S4CU/edit?gid=332854849#gid=332854849",
+        "sheet_id": "1afI8LtKVwGPkFie2UH5EOzdBkNdlgfxq4iySuo_S4CU",
+        "tabs": {
+            "main": "USE THIS", # sesuaikan nama tab
+        }
+    },
+
+    # Gsheet CPP dari tim PSP
+    "rdo_comp": {
+        "url": "https://docs.google.com/spreadsheets/d/19uPlzTog3czwphQERVpjybfOB-CTy62yftjtulgcC3g/edit?gid=0#gid=0",
+        "sheet_id": "19uPlzTog3czwphQERVpjybfOB-CTy62yftjtulgcC3g",
+        "tabs": {
+            "main": "USE THIS", # sesuaikan nama tab
+        }
+    },
     # Gsheet staff list dari SORT
     "ks7_list": {
         "url": "https://docs.google.com/spreadsheets/d/1ElOYSi4MwkSL9VOKQ8sMAgPdnpPg8ORJWCdTxoRhTjg/edit?gid=1149250797#gid=1149250797",
