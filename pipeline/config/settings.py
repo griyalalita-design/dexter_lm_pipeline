@@ -22,6 +22,7 @@ GSHEET = {
             "staff_list": "List Staff",
             "mapping_area": "Mapping Area",
             "master_tracker_by_hub": "Master Tracker by Hub",
+            "driver_type":"Driver Type List"
         },
         # Range yang di-clear saat Day 1 (sesuaikan)
         "clear_ranges": {
@@ -36,8 +37,33 @@ GSHEET = {
     },
 
     "tracker_sum": {
-        "url": "https://docs.google.com/spreadsheets/d/1RnOlEcK1DBiutWlrrHGAj58zDLwjw6-PJLJoxLoaXPo/edit?gid=0#gid=0",
-        "sheet_id": "1RnOlEcK1DBiutWlrrHGAj58zDLwjw6-PJLJoxLoaXPo",  # ambil dari URL
+        "url": "https://docs.google.com/spreadsheets/d/1Quvd39CQBtNQuPoVBOCtX5XsC3WMR-18p-yNhsfbFMg/edit?gid=0#gid=0",
+        "sheet_id": "1Quvd39CQBtNQuPoVBOCtX5XsC3WMR-18p-yNhsfbFMg",  # ambil dari URL
+        "tabs": {
+            "raw_data_cost": "Raw Data [Cost]",
+            "raw_data_int_comp" : "Raw Data [Integrity & Compliance]",
+            "raw_data_otif": "Raw Data [OTIF]",
+            "hub":  "[Upload] Hub",
+            "staff_list": "List Staff",
+            "mapping_area": "Mapping Area",
+            "master_tracker_by_hub": "Master Tracker by Hub",
+            "driver_type":"Driver Type List"
+        },
+        # Range yang di-clear saat Day 1 (sesuaikan)
+        "clear_ranges": {
+            "raw_data_cost": ["H6:H", "K6:K", "O6:P","V6:W","AA6:AD"],
+            "raw_data_int_comp": ["B5:E", "T5:W", "Y5:AB"],
+            "raw_data_otif": ["B5:E","H5:K","O5:Q","U5:W","AA5:AC","AG5:AJ","AN5:AP","AS5:AV"],
+            "hub" :["A4:M"],
+            "staff_list":["L4:S","V4:AC"],
+            "mapping_area":["B5:J"]
+            
+        },
+    },
+
+    "tracker_java": {
+        "url": "https://docs.google.com/spreadsheets/d/1UrDtxijL8xCUy_slNnHdUn6cgi3RbCDOut5hejjujoI/edit?gid=0#gid=0",
+        "sheet_id": "1UrDtxijL8xCUy_slNnHdUn6cgi3RbCDOut5hejjujoI",  # ambil dari URL
         "tabs": {
             "raw_data_cost": "Raw Data [Cost]",
             "raw_data_int_comp" : "Raw Data [Int & Comp]",
@@ -46,12 +72,13 @@ GSHEET = {
             "staff_list": "List Staff",
             "mapping_area": "Mapping Area",
             "master_tracker_by_hub": "Master Tracker by Hub",
+            "driver_type":"Driver Type List"
         },
         # Range yang di-clear saat Day 1 (sesuaikan)
         "clear_ranges": {
             "raw_data_cost": ["H6:H", "K6:K", "O6:P","V6:W","AA6:AD"],
-            "raw_data_int_comp": ["B5:E", "I5:L", "V5:Y", "AB5:AE"],
-            "raw_data_otif": ["B5:E","H5:K","AJ5:AM","AP5:AS","AW5:AZ","BC5:BF","BI5:BL"],
+            "raw_data_int_comp": ["B5:E", "I5:L","O5:R", "U5:X"],
+            "raw_data_otif": ["B5:E","H5:K","O5:R","V5:Y","AJ5:AM","AP5:AS","AW5:AZ","BC5:BF","BI5:BL"],
             "hub" :["A4:M"],
             "staff_list":["L4:S","V4:AC"],
             "mapping_area":["B5:J"]
