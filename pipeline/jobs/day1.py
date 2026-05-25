@@ -85,22 +85,13 @@ def run():
     # """
 
     # 1) Cleansing tracker tabs (keep header + formula columns)
-    clear_tracker_day1_ranges("tracker_GJ")
+    clear_tracker_day1_ranges("tracker_gj")
     clear_tracker_day1_ranges("tracker_sum")
-    clear_tracker_day1_ranges("tracker_java")
+    clear_tracker_day1_ranges("tracker_wj")
+    clear_tracker_day1_ranges("tracker_cj")
+    clear_tracker_day1_ranges("tracker_ej")
 
-    # # STEP 2: Cleansing Sanggahan (semua tab)
-    # print("\n[2/3] Cleansing sanggahan...")
 
-    # sanggahan_id = GSHEET["sanggahan"]["sheet_id"]
-    # clear_conf = GSHEET["sanggahan"].get("clear_ranges", ["A2:Z1000"])
-    # for tab_key, tab_name in GSHEET["sanggahan"]["tabs"].items():
-    #     for rng in _ranges_for_tab(clear_conf, tab_key):
-    #         clear_range(sanggahan_id, tab_name, rng)
-
-    # # STEP 3: Update Key Shipper dari PNS
-    # print("\n[3/3] Update Key Shipper dari PNS...")
-    # _update_key_shipper_from_pns()
 
     print("\nDay 1 selesai! Tracker")
 
