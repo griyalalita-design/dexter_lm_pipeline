@@ -11,7 +11,7 @@ SERVICE_ACCOUNT_FILE = "service_account.json"
 # ── Google Sheets Links ──────────────────────────────────────
 GSHEET = {
     # Tracker utama (tempat dump semua data performance)
-    "tracker_GJ": {
+    "tracker_gj": {
         "url": "https://docs.google.com/spreadsheets/d/1RnOlEcK1DBiutWlrrHGAj58zDLwjw6-PJLJoxLoaXPo/edit?gid=0#gid=0",
         "sheet_id": "1RnOlEcK1DBiutWlrrHGAj58zDLwjw6-PJLJoxLoaXPo",  # ambil dari URL
         "tabs": {
@@ -61,9 +61,59 @@ GSHEET = {
         },
     },
 
-    "tracker_java": {
+    "tracker_wj": {
         "url": "https://docs.google.com/spreadsheets/d/1UrDtxijL8xCUy_slNnHdUn6cgi3RbCDOut5hejjujoI/edit?gid=0#gid=0",
         "sheet_id": "1UrDtxijL8xCUy_slNnHdUn6cgi3RbCDOut5hejjujoI",  # ambil dari URL
+        "tabs": {
+            "raw_data_cost": "Raw Data [Cost]",
+            "raw_data_int_comp" : "Raw Data [Int & Comp]",
+            "raw_data_otif": "Raw Data [OTIF]",
+            "hub":  "[Upload] Hub",
+            "staff_list": "List Staff",
+            "mapping_area": "Mapping Area",
+            "master_tracker_by_hub": "Master Tracker by Hub",
+            "driver_type":"Driver Type List"
+        },
+        # Range yang di-clear saat Day 1 (sesuaikan)
+        "clear_ranges": {
+            "raw_data_cost": ["H6:H", "K6:K", "O6:P","V6:W","AA6:AD"],
+            "raw_data_int_comp": ["B5:E", "I5:L","O5:R", "U5:X"],
+            "raw_data_otif": ["B5:E","H5:K","O5:R","V5:Y","AJ5:AM","AP5:AS","AW5:AZ","BC5:BF","BI5:BL"],
+            "hub" :["A4:M"],
+            "staff_list":["L4:S","V4:AC"],
+            "mapping_area":["B5:J"]
+            
+        },
+    },
+
+     "tracker_cj": {
+        "url": "https://docs.google.com/spreadsheets/d/1BvmmJ9VCX2g-2bVs3IfiOdkoB20lmlEdJw8NNvcB7n4/edit?gid=0#gid=0",
+        "sheet_id": "1BvmmJ9VCX2g-2bVs3IfiOdkoB20lmlEdJw8NNvcB7n4",  # ambil dari URL
+        "tabs": {
+            "raw_data_cost": "Raw Data [Cost]",
+            "raw_data_int_comp" : "Raw Data [Int & Comp]",
+            "raw_data_otif": "Raw Data [OTIF]",
+            "hub":  "[Upload] Hub",
+            "staff_list": "List Staff",
+            "mapping_area": "Mapping Area",
+            "master_tracker_by_hub": "Master Tracker by Hub",
+            "driver_type":"Driver Type List"
+        },
+        # Range yang di-clear saat Day 1 (sesuaikan)
+        "clear_ranges": {
+            "raw_data_cost": ["H6:H", "K6:K", "O6:P","V6:W","AA6:AD"],
+            "raw_data_int_comp": ["B5:E", "I5:L","O5:R", "U5:X"],
+            "raw_data_otif": ["B5:E","H5:K","O5:R","V5:Y","AJ5:AM","AP5:AS","AW5:AZ","BC5:BF","BI5:BL"],
+            "hub" :["A4:M"],
+            "staff_list":["L4:S","V4:AC"],
+            "mapping_area":["B5:J"]
+            
+        },
+    },
+
+    "tracker_ej": {
+        "url": "https://docs.google.com/spreadsheets/d/1ssOvp-xiC8w_RbQgOwxcYD29b4bJlas6aERJdYyDLpA/edit?gid=0#gid=0",
+        "sheet_id": "1ssOvp-xiC8w_RbQgOwxcYD29b4bJlas6aERJdYyDLpA",  # ambil dari URL
         "tabs": {
             "raw_data_cost": "Raw Data [Cost]",
             "raw_data_int_comp" : "Raw Data [Int & Comp]",
