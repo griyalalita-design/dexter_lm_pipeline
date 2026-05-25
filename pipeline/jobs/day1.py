@@ -7,7 +7,6 @@ from config.settings import GSHEET
 from utils.gsheet import clear_range, open_by_key, read_sheet, copy_range
 from utils.transform import get_last_month_range
 import pandas as pd
-from utils import config
 
 
 
@@ -22,7 +21,7 @@ def _iter_ranges(ranges):
 
 
 def clear_tracker_day1_ranges(tracker_key: str) -> None:
-    tracker = config.GSHEET[tracker_key]
+    tracker = GSHEET["tracker_key"]
     tracker_id = tracker["sheet_id"]
     tabs = tracker["tabs"]
     clear_config = tracker.get("clear_ranges", {})
