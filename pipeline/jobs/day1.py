@@ -35,33 +35,33 @@ def run():
     tracker_id = GSHEET["tracker_gj"]["sheet_id"]
 
     # Clear Raw Data [All]
-    raw_all_tab = GSHEET["tracker"]["tabs"]["raw_data_cost"]
-    raw_all_ranges = _iter_ranges(GSHEET["tracker"].get("clear_ranges", {}).get("raw_data_cost", []))
+    raw_all_tab = GSHEET["tracker_gj"]["tabs"]["raw_data_cost"]
+    raw_all_ranges = _iter_ranges(GSHEET["tracker_gj"].get("clear_ranges", {}).get("raw_data_cost", []))
     for rng in raw_all_ranges:
         clear_range(tracker_id, raw_all_tab, rng)
 
-    raw_int_tab = GSHEET["tracker"]["tabs"]["raw_data_int_comp"]
-    raw_int_ranges = _iter_ranges(GSHEET["tracker"].get("clear_ranges", {}).get("raw_data_int_comp", []))
+    raw_int_tab = GSHEET["tracker_gj"]["tabs"]["raw_data_int_comp"]
+    raw_int_ranges = _iter_ranges(GSHEET["tracker_gj"].get("clear_ranges", {}).get("raw_data_int_comp", []))
     for rng in raw_cost_ranges:
         clear_range(tracker_id, raw_cost_tab, rng)
 
-    raw_cost_tab = GSHEET["tracker"]["tabs"]["raw_data_otif"]
-    raw_cost_ranges = _iter_ranges(GSHEET["tracker"].get("clear_ranges", {}).get("raw_data_otif", []))
+    raw_cost_tab = GSHEET["tracker_gj"]["tabs"]["raw_data_otif"]
+    raw_cost_ranges = _iter_ranges(GSHEET["tracker_gj"].get("clear_ranges", {}).get("raw_data_otif", []))
     for rng in raw_cost_ranges:
         clear_range(tracker_id, raw_cost_tab, rng)
 
-    raw_cost_tab = GSHEET["tracker"]["tabs"]["hub"]
-    raw_cost_ranges = _iter_ranges(GSHEET["tracker"].get("clear_ranges", {}).get("hub", []))
+    raw_cost_tab = GSHEET["tracker_gj"]["tabs"]["hub"]
+    raw_cost_ranges = _iter_ranges(GSHEET["tracker_gj"].get("clear_ranges", {}).get("hub", []))
     for rng in raw_cost_ranges:
         clear_range(tracker_id, raw_cost_tab, rng)
 
-    raw_cost_tab = GSHEET["tracker"]["tabs"]["staff_list"]
-    raw_cost_ranges = _iter_ranges(GSHEET["tracker"].get("clear_ranges", {}).get("staff_list", []))
+    raw_cost_tab = GSHEET["tracker_gj"]["tabs"]["staff_list"]
+    raw_cost_ranges = _iter_ranges(GSHEET["tracker_gj"].get("clear_ranges", {}).get("staff_list", []))
     for rng in raw_cost_ranges:
         clear_range(tracker_id, raw_cost_tab, rng)
 
-    raw_cost_tab = GSHEET["tracker"]["tabs"]["mapping_area"]
-    raw_cost_ranges = _iter_ranges(GSHEET["tracker"].get("clear_ranges", {}).get("mapping_area", []))
+    raw_cost_tab = GSHEET["tracker_gj"]["tabs"]["mapping_area"]
+    raw_cost_ranges = _iter_ranges(GSHEET["tracker_gj"].get("clear_ranges", {}).get("mapping_area", []))
     for rng in raw_cost_ranges:
         clear_range(tracker_id, raw_cost_tab, rng)
 
