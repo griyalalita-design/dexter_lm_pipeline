@@ -4,63 +4,73 @@
 
 from config.settings import GSHEET
 from utils.gsheet import clear_range
+import time
 
 
-def _iter_ranges(ranges):
+def _iter_ranges(value):
     """
     Handle:
-    - string tunggal
-    - list range
+    - string
+    - list
+    - tuple
     - None
     """
-    if isinstance(ranges, str):
-        yield ranges
-        return
+    if isinstance(value, (list, tuple)):
+        return list(value)
 
-    for rng in ranges or []:
-        if rng:
-            yield rng
+    if isinstance(value, str):
+        return [value]
+
+    return []
 
 
-def clear_tracker_day1_ranges(tracker_key: str) -> None:
+def clear_tracker(tracker_key):
     """
-    Clear configured ranges for a tracker.
+    Clear tracker berdasarkan config settings.py
     """
 
-    tracker = GSHEET.get(tracker_key)
+    tracker = GSHEET[tracker_key]
 
-    if not tracker:
-        print(f"[ERROR] Tracker config '{tracker_key}' tidak ditemukan")
-        return
-
-    tracker_id = tracker.get("sheet_id")
-    tabs = tracker.get("tabs", {})
-    clear_config = tracker.get("clear_ranges", {})
+    tracker_id = tracker["sheet_id"]
+    tabs = tracker["tabs"]
+    clear_ranges = tracker.get("clear_ranges", {})
 
     print(f"\nClearing tracker: {tracker_key}")
 
-    # Loop semua clear config
-    for config_key, ranges in clear_config.items():
+    # looping semua config clear range
+    for tab_key, ranges in clear_ranges.items():
 
-        tab_name = tabs.get(config_key)
-
-        if not tab_name:
-            print(f"[WARNING] Tab mapping '{config_key}' tidak ditemukan")
+        # skip kalau tab tidak ada
+        if tab_key not in tabs:
+            print(f"[SKIP] Tab mapping '{tab_key}' tidak ditemukan")
             continue
 
+        tab_name = tabs[tab_key]
+
         for rng in _iter_ranges(ranges):
+
             try:
                 print(f"  -> Clear {tab_name} | {rng}")
-                clear_range(tracker_id, tab_name, rng)
+
+                clear_range(
+                    tracker_id,
+                    tab_name,
+                    rng
+                )
+
+                print(f"  [SUCCESS]")
+
+                # kasih delay biar ga kena quota
+                time.sleep(1)
 
             except Exception as e:
+
                 print(f"  [FAILED] {tab_name} | {rng}")
-                print(f"  Error: {e}")
+                print(f"  Error: {repr(e)}")
 
+                # delay juga pas gagal
+                time.sleep(2)
 
-# ==========================
-# MAIN RUNNER
-# ==========================
 
 def run():
 
@@ -75,7 +85,14 @@ def run():
     ]
 
     for tracker_key in tracker_list:
-        clear_tracker_day1_ranges(tracker_key)
+
+        try:
+            clear_tracker(tracker_key)
+
+        except Exception as e:
+
+            print(f"\n[ERROR TRACKER] {tracker_key}")
+            print(repr(e))
 
     print("\n=== DAY 1 SELESAI ===")
 
