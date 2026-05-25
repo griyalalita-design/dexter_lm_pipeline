@@ -12,8 +12,10 @@ SERVICE_ACCOUNT_FILE = "service_account.json"
 GSHEET = {
     # Tracker utama (tempat dump semua data performance)
     "tracker_gj": {
-        "url": "https://docs.google.com/spreadsheets/d/1RnOlEcK1DBiutWlrrHGAj58zDLwjw6-PJLJoxLoaXPo/edit?gid=0#gid=0",
-        "sheet_id": "1RnOlEcK1DBiutWlrrHGAj58zDLwjw6-PJLJoxLoaXPo",  # ambil dari URL
+        # "url": "https://docs.google.com/spreadsheets/d/1RnOlEcK1DBiutWlrrHGAj58zDLwjw6-PJLJoxLoaXPo/edit?gid=0#gid=0",
+        # "sheet_id": "1RnOlEcK1DBiutWlrrHGAj58zDLwjw6-PJLJoxLoaXPo",  # ambil dari URL
+        "url": "https://docs.google.com/spreadsheets/d/103l9b1ss6Ub6AegamGQzSfr0f9gQ0LLTxk8gsW705HY/edit?gid=0#gid=0",
+        "sheet_id": "103l9b1ss6Ub6AegamGQzSfr0f9gQ0LLTxk8gsW705HY",  # ambil dari URL
         "tabs": {
             "raw_data_cost": "Raw Data [Cost]",
             "raw_data_int_comp" : "Raw Data [Int & Comp]",
@@ -37,8 +39,10 @@ GSHEET = {
     },
 
     "tracker_sum": {
-        "url": "https://docs.google.com/spreadsheets/d/1Quvd39CQBtNQuPoVBOCtX5XsC3WMR-18p-yNhsfbFMg/edit?gid=0#gid=0",
-        "sheet_id": "1Quvd39CQBtNQuPoVBOCtX5XsC3WMR-18p-yNhsfbFMg",  # ambil dari URL
+        # "url": "https://docs.google.com/spreadsheets/d/1Quvd39CQBtNQuPoVBOCtX5XsC3WMR-18p-yNhsfbFMg/edit?gid=0#gid=0",
+        # "sheet_id": "1Quvd39CQBtNQuPoVBOCtX5XsC3WMR-18p-yNhsfbFMg",  # ambil dari URL
+        "url": "https://docs.google.com/spreadsheets/d/19v6YpwKpApzPUtUr9o7XKKFRyMbZ9-uV5AGX9MEsbOY/edit?gid=0#gid=0",
+        "sheet_id": "19v6YpwKpApzPUtUr9o7XKKFRyMbZ9-uV5AGX9MEsbOY",  # ambil dari URL
         "tabs": {
             "raw_data_cost": "Raw Data [Cost]",
             "raw_data_int_comp" : "Raw Data [Integrity & Compliance]",
@@ -62,8 +66,10 @@ GSHEET = {
     },
 
     "tracker_wj": {
-        "url": "https://docs.google.com/spreadsheets/d/1UrDtxijL8xCUy_slNnHdUn6cgi3RbCDOut5hejjujoI/edit?gid=0#gid=0",
-        "sheet_id": "1UrDtxijL8xCUy_slNnHdUn6cgi3RbCDOut5hejjujoI",  # ambil dari URL
+        # "url": "https://docs.google.com/spreadsheets/d/1UrDtxijL8xCUy_slNnHdUn6cgi3RbCDOut5hejjujoI/edit?gid=0#gid=0",
+        # "sheet_id": "1UrDtxijL8xCUy_slNnHdUn6cgi3RbCDOut5hejjujoI",  # ambil dari URL
+        "url": "https://docs.google.com/spreadsheets/d/1Q-GeCfhKBxJK8soXjFnJB1ZIB-ni54fn57FTocuIy9Q/edit?gid=0#gid=0",
+        "sheet_id": "1Q-GeCfhKBxJK8soXjFnJB1ZIB-ni54fn57FTocuIy9Q",  # ambil dari URL
         "tabs": {
             "raw_data_cost": "Raw Data [Cost]",
             "raw_data_int_comp" : "Raw Data [Int & Comp]",
@@ -87,8 +93,10 @@ GSHEET = {
     },
 
      "tracker_cj": {
-        "url": "https://docs.google.com/spreadsheets/d/1BvmmJ9VCX2g-2bVs3IfiOdkoB20lmlEdJw8NNvcB7n4/edit?gid=0#gid=0",
-        "sheet_id": "1BvmmJ9VCX2g-2bVs3IfiOdkoB20lmlEdJw8NNvcB7n4",  # ambil dari URL
+        # "url": "https://docs.google.com/spreadsheets/d/1BvmmJ9VCX2g-2bVs3IfiOdkoB20lmlEdJw8NNvcB7n4/edit?gid=0#gid=0",
+        # "sheet_id": "1BvmmJ9VCX2g-2bVs3IfiOdkoB20lmlEdJw8NNvcB7n4",  # ambil dari URL
+        "url": "https://docs.google.com/spreadsheets/d/1J26ej-MU_HwDBmzfDJPhAjCWTuNNmv7hApj-GmmpFm8/edit?gid=0#gid=0",
+        "sheet_id": "1J26ej-MU_HwDBmzfDJPhAjCWTuNNmv7hApj-GmmpFm8",  # ambil dari URL
         "tabs": {
             "raw_data_cost": "Raw Data [Cost]",
             "raw_data_int_comp" : "Raw Data [Int & Comp]",
@@ -112,8 +120,10 @@ GSHEET = {
     },
 
     "tracker_ej": {
-        "url": "https://docs.google.com/spreadsheets/d/1ssOvp-xiC8w_RbQgOwxcYD29b4bJlas6aERJdYyDLpA/edit?gid=0#gid=0",
-        "sheet_id": "1ssOvp-xiC8w_RbQgOwxcYD29b4bJlas6aERJdYyDLpA",  # ambil dari URL
+        # "url": "https://docs.google.com/spreadsheets/d/1ssOvp-xiC8w_RbQgOwxcYD29b4bJlas6aERJdYyDLpA/edit?gid=0#gid=0",
+        # "sheet_id": "1ssOvp-xiC8w_RbQgOwxcYD29b4bJlas6aERJdYyDLpA",  # ambil dari URL
+        "url": "https://docs.google.com/spreadsheets/d/1qB1HQizD3dGiZECvyBbwhib4P8XeEpNVUKd3YfE5vwk/edit?gid=0#gid=0",
+        "sheet_id": "1qB1HQizD3dGiZECvyBbwhib4P8XeEpNVUKd3YfE5vwk",  # ambil dari URL
         "tabs": {
             "raw_data_cost": "Raw Data [Cost]",
             "raw_data_int_comp" : "Raw Data [Int & Comp]",
