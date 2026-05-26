@@ -29,42 +29,54 @@ def _ranges_for_tab(clear_ranges, tab_key):
 # =================== Buat Cleaning Data Tracker dan Sanggahan ========================== #
 def run():
 
-    # STEP 1: Cleansing Tracker
-    print("\n[1/3] Cleansing tracker...")
+    print("\n[1/1] Cleansing tracker...")
 
-    tracker_id = GSHEET["tracker_gj"]["sheet_id"]
+    tracker_list = [
+        "tracker_gj",
+        "tracker_sum",
+        "tracker_wj",
+        "tracker_cj",
+        "tracker_ej",
+    ]
 
-    # Clear Raw Data [All]
-    raw_all_tab = GSHEET["tracker_gj"]["tabs"]["raw_data_cost"]
-    raw_all_ranges = _iter_ranges(GSHEET["tracker_gj"].get("clear_ranges", {}).get("raw_data_cost", []))
-    for rng in raw_all_ranges:
-        clear_range(tracker_id, raw_all_tab, rng)
+    for tracker_key in tracker_list:
 
-    raw_int_tab = GSHEET["tracker_gj"]["tabs"]["raw_data_int_comp"]
-    raw_int_ranges = _iter_ranges(GSHEET["tracker_gj"].get("clear_ranges", {}).get("raw_data_int_comp", []))
-    for rng in raw_cost_ranges:
-        clear_range(tracker_id, raw_cost_tab, rng)
+        tracker = GSHEET[tracker_key]
 
-    raw_cost_tab = GSHEET["tracker_gj"]["tabs"]["raw_data_otif"]
-    raw_cost_ranges = _iter_ranges(GSHEET["tracker_gj"].get("clear_ranges", {}).get("raw_data_otif", []))
-    for rng in raw_cost_ranges:
-        clear_range(tracker_id, raw_cost_tab, rng)
+        tracker_id = tracker["sheet_id"]
+        tabs = tracker["tabs"]
+        clear_ranges = tracker.get("clear_ranges", {})
 
-    raw_cost_tab = GSHEET["tracker_gj"]["tabs"]["hub"]
-    raw_cost_ranges = _iter_ranges(GSHEET["tracker_gj"].get("clear_ranges", {}).get("hub", []))
-    for rng in raw_cost_ranges:
-        clear_range(tracker_id, raw_cost_tab, rng)
+        print(f"\nClearing tracker: {tracker_key}")
 
-    raw_cost_tab = GSHEET["tracker_gj"]["tabs"]["staff_list"]
-    raw_cost_ranges = _iter_ranges(GSHEET["tracker_gj"].get("clear_ranges", {}).get("staff_list", []))
-    for rng in raw_cost_ranges:
-        clear_range(tracker_id, raw_cost_tab, rng)
+        for tab_key, ranges in clear_ranges.items():
 
-    raw_cost_tab = GSHEET["tracker_gj"]["tabs"]["mapping_area"]
-    raw_cost_ranges = _iter_ranges(GSHEET["tracker_gj"].get("clear_ranges", {}).get("mapping_area", []))
-    for rng in raw_cost_ranges:
-        clear_range(tracker_id, raw_cost_tab, rng)
+            tab_name = tabs.get(tab_key)
 
+            if not tab_name:
+                print(f"[SKIP] Tab '{tab_key}' tidak ditemukan")
+                continue
+
+            for rng in _iter_ranges(ranges):
+
+                try:
+
+                    print(f"  -> Clear {tab_name} | {rng}")
+
+                    clear_range(
+                        tracker_id,
+                        tab_name,
+                        rng
+                    )
+
+                    print("  [SUCCESS]")
+
+                except Exception as e:
+
+                    print(f"  [FAILED]")
+                    print(repr(e))
+
+    print("\nDay 1 selesai!")
  
 
 
