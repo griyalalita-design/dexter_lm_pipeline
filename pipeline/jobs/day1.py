@@ -1,83 +1,82 @@
 # ============================================================
-# jobs/day1.py - Tanggal 1: Cleansing + Update Key Shipper
-# File ini hanya orkestasi, logic ada di utils/
+# jobs/day1.py - Cleansing Tracker
 # ============================================================
 
+import time
+
 from config.settings import GSHEET
-from utils.gsheet import clear_range, read_sheet
-from utils.transform import get_last_month_range
-import pandas as pd
+from utils.gsheet import clear_range
 
 
 def _iter_ranges(value):
+
     if isinstance(value, dict):
         return list(value.values())
+
     if isinstance(value, (list, tuple)):
         return list(value)
+
     if isinstance(value, str):
         return [value]
+
     return []
 
 
-def _ranges_for_tab(clear_ranges, tab_key):
-    if isinstance(clear_ranges, dict):
-        return _iter_ranges(clear_ranges.get(tab_key, []))
-    return _iter_ranges(clear_ranges)
+# ================= SAFE CLEAR ================= #
+def safe_clear(sheet_id, tab_name, rng):
+
+    try:
+
+        print(f"  -> Clear {tab_name} | {rng}")
+
+        clear_range(sheet_id, tab_name, rng)
+
+        print("  [SUCCESS]")
+
+    except Exception as e:
+
+        print("  [FAILED]")
+        print(e)
+
+    # IMPORTANT: avoid quota exceeded
+    time.sleep(2)
 
 
-
-# =================== Buat Cleaning Data Tracker dan Sanggahan ========================== #
+# ================= MAIN RUN ================= #
 def run():
 
-    print("\n[1/1] Cleansing tracker...")
+    print("\n=== DAY 1 - CLEANSING TRACKER ===")
 
-    tracker_list = [
-        "tracker_gj",
-        "tracker_sum",
-        "tracker_wj",
-        "tracker_cj",
-        "tracker_ej",
-    ]
+    tracker_conf = GSHEET["tracker"]
 
-    for tracker_key in tracker_list:
+    tracker_id = tracker_conf["sheet_id"]
 
-        tracker = GSHEET[tracker_key]
+    tabs = tracker_conf["tabs"]
 
-        tracker_id = tracker["sheet_id"]
-        tabs = tracker["tabs"]
-        clear_ranges = tracker.get("clear_ranges", {})
+    clear_ranges = tracker_conf.get("clear_ranges", {})
 
-        print(f"\nClearing tracker: {tracker_key}")
+    # Loop semua tab yang ada di clear_ranges
+    for tab_key, ranges in clear_ranges.items():
 
-        for tab_key, ranges in clear_ranges.items():
+        # Ambil nama tab dari config tabs
+        tab_name = tabs.get(tab_key)
 
-            tab_name = tabs.get(tab_key)
+        if not tab_name:
+            print(f"[SKIPPED] tab config tidak ditemukan: {tab_key}")
+            continue
 
-            if not tab_name:
-                print(f"[SKIP] Tab '{tab_key}' tidak ditemukan")
-                continue
+        # Normalize ranges
+        normalized_ranges = _iter_ranges(ranges)
 
-            for rng in _iter_ranges(ranges):
+        for rng in normalized_ranges:
 
-                try:
+            safe_clear(
+                tracker_id,
+                tab_name,
+                rng
+            )
 
-                    print(f"  -> Clear {tab_name} | {rng}")
-
-                    clear_range(
-                        tracker_id,
-                        tab_name,
-                        rng
-                    )
-
-                    print("  [SUCCESS]")
-
-                except Exception as e:
-
-                    print(f"  [FAILED]")
-                    print(repr(e))
-
-    print("\nDay 1 selesai!")
- 
+    print("\n=== DAY 1 SELESAI ===")
 
 
 if __name__ == "__main__":
