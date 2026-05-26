@@ -33,7 +33,7 @@ GSHEET = {
             "raw_data_otif": ["B5:E","H5:K","AJ5:AM","AP5:AS","AW5:AZ","BC5:BF","BI5:BL"],
             "hub" :["A4:M"],
             "staff_list":["L4:S","V4:AC"],
-            "mapping_area":["B5:J"]
+            # "mapping_area":["B5:J"]
             
         },
     },
@@ -60,7 +60,7 @@ GSHEET = {
             "raw_data_otif": ["B5:E","H5:K","O5:Q","U5:W","AA5:AC","AG5:AJ","AN5:AP","AS5:AV"],
             "hub" :["A4:M"],
             "staff_list":["L4:S","V4:AC"],
-            "mapping_area":["B5:J"]
+            # "mapping_area":["B5:J"]
             
         },
     },
@@ -87,7 +87,7 @@ GSHEET = {
             "raw_data_otif": ["B5:E","H5:K","O5:R","V5:Y","AJ5:AM","AP5:AS","AW5:AZ","BC5:BF","BI5:BL"],
             "hub" :["A4:M"],
             "staff_list":["L4:S","V4:AC"],
-            "mapping_area":["B5:J"]
+            # "mapping_area":["B5:J"]
             
         },
     },
@@ -114,7 +114,7 @@ GSHEET = {
             "raw_data_otif": ["B5:E","H5:K","O5:R","V5:Y","AJ5:AM","AP5:AS","AW5:AZ","BC5:BF","BI5:BL"],
             "hub" :["A4:M"],
             "staff_list":["L4:S","V4:AC"],
-            "mapping_area":["B5:J"]
+            # "mapping_area":["B5:J"]
             
         },
     },
@@ -141,7 +141,7 @@ GSHEET = {
             "raw_data_otif": ["B5:E","H5:K","O5:R","V5:Y","AJ5:AM","AP5:AS","AW5:AZ","BC5:BF","BI5:BL"],
             "hub" :["A4:M"],
             "staff_list":["L4:S","V4:AC"],
-            "mapping_area":["B5:J"]
+            # "mapping_area":["B5:J"]
             
         },
     },
