@@ -312,7 +312,8 @@ METABASE_CONFIG = {
                     {"id":"6d243afd-9693-4b71-bd9d-43ba83ae3112","type":"string/=","value":[7474545,341107,216977],"target":["dimension",["template-tag","parent_id"]]},
                     {"id":"f304224f-3506-4723-8be1-128aa5d268c3","type":"number/=","value":[15],"target":["variable",["template-tag","cutoff_time"]]},
                 ],
-        },
+            },
+          },  
 
         "n0_completion": {
             "url": "https://metabase.ninjavan.co/api/card/122260/query/json",
@@ -344,6 +345,7 @@ METABASE_CONFIG = {
                     {"id":"8cc079bf-483f-4ff4-bb30-8504ee5f8d16","type":"string/=","value":[7474545],"target":["dimension",["template-tag","parent_id"]]},
                     {"id":"f304224f-3506-4723-8be1-128aa5d268c3","type":"number/=","value":[15],"target":["variable",["template-tag","cutoff_time"]]},
                 ],
+            },
         },
 
         "n1_completion": {
@@ -429,7 +431,7 @@ METABASE_CONFIG = {
                 {"id":"f1fca7d5-bddb-42ce-9771-1f17b2c6a1ec","type":"string/=","value":["CDA Driver","Driver","Freelance CDA Driver","Freelance Driver","Junior Coldchain Driver"],"target":["dimension",["template-tag","route_driver_type"]]},
                 {"id":"6980e48f-126e-48d9-a0d3-da79bbd63751","type":"string/=","value":"b2br_key_shipper","target":["dimension",["template-tag","shipper_id"]]},
                 {"id":"190fb3a4-e6cb-4b4e-a78b-f4acb7cc5448","type":"category","value":["month"],"target":["variable",["template-tag","aggr"]]},
-                {"id":"ecfc3da2-aca6-4303-bb42-aa3f9a21810d","type":"string/contains","value":["B2BR"],"options":{"case-sensitive":false},"target":["dimension",["template-tag","pickup_tags"]]},
+                {"id":"ecfc3da2-aca6-4303-bb42-aa3f9a21810d","type":"string/contains","value":["B2BR"],"options":{"case-sensitive":False},"target":["dimension",["template-tag","pickup_tags"]]},
                 {"id":"26473b49-9801-4240-ade1-6c07b7851c2a","type":"date/single","value":"start_date","target":["variable",["template-tag","start_date"]]}
             ]
         },
@@ -448,7 +450,7 @@ METABASE_CONFIG = {
                     {"id":"08abe0d9-db20-4471-bf32-2ff223991971","type":"string/=","value":[341107,216977],"target":["dimension",["template-tag","parent_id"]]},
                 ],
                 "aggregator": [
-                    {"id":"4e3825b2-b673-4bc2-850a-6653df4b0e52","type":"id","value":"aggregator","target":["dimension",["template-tag","shipper_id"]]},,
+                    {"id":"4e3825b2-b673-4bc2-850a-6653df4b0e52","type":"id","value":"aggregator","target":["dimension",["template-tag","shipper_id"]]},
                 ],
                 "4pl": [
                     {"id": "93050463-b83a-4b79-9176-c9baa78b5365", "type": "number/=", "value": [1], "target": ["variable", ["template-tag", "4pl_flag"]]},
