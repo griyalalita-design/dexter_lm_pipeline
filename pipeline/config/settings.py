@@ -460,30 +460,30 @@ METABASE_CONFIG = {
             "url": "https://metabase.ninjavan.co/api/card/116132/query/json",
             "report_type": "fm",
             "common_params_template": [
-                {"id":"0c07a704-c667-4468-a4e5-76e76367de31","type":"date/single","value":"2026-05-01","target":["variable",["template-tag","start"]]},
-                {"id":"5dfa2a9b-1df1-4b15-abcc-b44bf7f0fe16","type":"date/single","value":"2026-05-06","target":["variable",["template-tag","end"]]}
+                {"id":"0c07a704-c667-4468-a4e5-76e76367de31","type":"date/single","value":"start_date","target":["variable",["template-tag","start"]]},
+                {"id":"5dfa2a9b-1df1-4b15-abcc-b44bf7f0fe16","type":"date/single","value":"end_date","target":["variable",["template-tag","end"]]}
             ],
         },
     }
 }
 
-# ── Archieved File ─────────────────────────────────────────────────────
-ARCHIVE_CONFIG = {
-    "tracker": {
-        "source_file_id": "10jwwERVKLvdrk7tkmqVXeZHGp3Q1lV_2IjFsc6fXQhQ",
-        "target_folder_id": "18BwwadT0kgyPgvdmOg3b7CP29zqrTFB4",
-    },
-    "sanggahan": {
-        "source_file_id": "1q1CkYFiZQKRvfYDjZGOJmqNOndbH3hd7Du_Pq0Wn7AU",
-        "target_folder_id": "12d8VANvDb2earFpAJOgQLj4kW1ITZm_U",
-    },
-    "converter": {
-        "source_file_id": "1Sn2HisZcT81duWuWtKpVx_E_8192XeFIwtXrrDoSpGQ",
-        "target_folder_id": "1Dx2EJoddhhdSqJs5qkNG8rWB9ydCc1Sl",
-    },
-}
+# # ── Archieved File ─────────────────────────────────────────────────────
+# ARCHIVE_CONFIG = {
+#     "tracker": {
+#         "source_file_id": "10jwwERVKLvdrk7tkmqVXeZHGp3Q1lV_2IjFsc6fXQhQ",
+#         "target_folder_id": "18BwwadT0kgyPgvdmOg3b7CP29zqrTFB4",
+#     },
+#     "sanggahan": {
+#         "source_file_id": "1q1CkYFiZQKRvfYDjZGOJmqNOndbH3hd7Du_Pq0Wn7AU",
+#         "target_folder_id": "12d8VANvDb2earFpAJOgQLj4kW1ITZm_U",
+#     },
+#     "converter": {
+#         "source_file_id": "1Sn2HisZcT81duWuWtKpVx_E_8192XeFIwtXrrDoSpGQ",
+#         "target_folder_id": "1Dx2EJoddhhdSqJs5qkNG8rWB9ydCc1Sl",
+#     },
+# }
 
-# ── Pipeline Schedule ─────────────────────────────────────────
-# Ini untuk referensi GitHub Actions
-# Tanggal yang pipeline jalan tiap bulan
-SCHEDULE_DAYS = [1, 2, 6, 10, 14, 15, 16]
+# # ── Pipeline Schedule ─────────────────────────────────────────
+# # Ini untuk referensi GitHub Actions
+# # Tanggal yang pipeline jalan tiap bulan
+# SCHEDULE_DAYS = [1, 2, 6, 10, 14, 15, 16]
