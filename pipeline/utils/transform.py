@@ -168,6 +168,53 @@ def n0_rsvn(df_raw):
 
     return tracker_df
 
+def poda_val(df_raw):
+
+    if df_raw.empty:
+        return df_raw
+    tracker_df = (
+    df_raw
+    .groupby(["aggr", "hub_name"], as_index=False)
+    .agg({
+        "total_valid_task_id":"sum",
+        "total_task_id": "sum"
+    })
+    .sort_values("hub_name")
+)
+
+    return tracker_df
+
+def pu_rot(df_raw):
+
+    if df_raw.empty:
+        return df_raw
+    tracker_df = (
+    df_raw
+    .groupby(["rsvn_ready_date", "hub_name"], as_index=False)
+    .agg({
+        "rsvn_ontime":"sum",
+        "rsvn_assigned": "sum"
+    })
+    .sort_values("hub_name")
+)
+
+    return tracker_df
+
+def pivot_td6 (df_raw):
+
+    if df_raw.empty:
+        return df_raw
+    tracker_df = (
+    df_raw
+    .groupby(["n6_cutoff_date", "hub"], as_index=False)
+    .agg({
+        "hit_n6_all":"sum",
+        "total_all_orders": "sum"
+    })
+    .sort_values("hub")
+)
+
+    return tracker_df
     
 
 
