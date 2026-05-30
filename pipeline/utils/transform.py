@@ -89,7 +89,7 @@ def transform_attempt(df_raw):
 
     tracker_df = (
         df_raw
-        .groupby("dest_hub_name", as_index=False)
+        .groupby(["dest_hub_date","dest_hub_name"], as_index=False)
         .agg({
             "n0_delivery_attempt_flag": "sum",
             "vol": "sum"
@@ -110,7 +110,7 @@ def transform_n0_completion(df_raw):
         return df_raw
     tracker_df = (
     df_raw
-    .groupby("dest_hub_name", as_index=False)
+    .groupby(["dest_hub_date","dest_hub_name"], as_index=False)
     .agg({
         "n0_delivery_complete_flag":"sum",
         "vol": "sum"
@@ -126,7 +126,7 @@ def transform_n1_completion(df_raw):
         return df_raw
     tracker_df = (
     df_raw
-    .groupby("dest_hub_name", as_index=False)
+    .groupby(["dest_hub_date","dest_hub_name"], as_index=False)
     .agg({
         "adj_n1_delivery_complete_flag":"sum",
         "vol": "sum"
@@ -142,7 +142,7 @@ def transform_lnd(df_raw):
         return df_raw
     tracker_df = (
     df_raw
-    .groupby("hub", as_index=False)
+    .groupby(["date","hub"], as_index=False)
     .agg({
         "total_loss_damage":"sum",
         "total_volume": "sum"
