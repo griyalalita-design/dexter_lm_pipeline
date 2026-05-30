@@ -99,41 +99,30 @@ def transform_attempt(df_raw):
 
     return tracker_df
 
-
-
-
-
-def check_anomaly(df: pd.DataFrame, numeric_cols: list) -> pd.DataFrame:
+def transform_n0_completion(df_raw):
     """
-    Check anomaly di data: DIV/0, N/A, atau nilai kosong.
-
-    Args:
-        df           : DataFrame yang mau dicek
-        numeric_cols : list kolom numerik yang mau dicek
-
-    Returns:
-        DataFrame berisi baris-baris yang anomaly
+    Tracker Output:
+    Row Labels (dest_hub_name)
+    Sum of n0_delivery_complete_flag
+    Sum of vol
     """
-    anomaly_rows = pd.DataFrame()
+    if df_raw.empty:
+        return df_raw
+    tracker_df = (
+    df_raw
+    .groupby("dest_hub_name", as_index=False)
+    .agg({
+        "n0_delivery_complete_flag":"sum",
+        "vol": "sum"
+    })
+    .sort_values("dest_hub_name")
+)
 
-    for col in numeric_cols:
-        if col not in df.columns:
-            continue
-        # Check DIV/0 atau string error
-        mask_error = df[col].astype(str).str.contains("#DIV|#N/A|#REF|#VALUE", na=False)
-        # Check null
-        mask_null = df[col].isnull()
-        # Check nol (ga ada performance)
-        mask_zero = df[col] == 0
+    return tracker_df
 
-        anomaly = df[mask_error | mask_null | mask_zero].copy()
-        if len(anomaly) > 0:
-            anomaly["anomaly_col"] = col
-            anomaly_rows = pd.concat([anomaly_rows, anomaly])
+    
 
-    if len(anomaly_rows) > 0:
-        print(f"Ditemukan {len(anomaly_rows)} baris anomaly!")
-    else:
-        print("Tidak ada anomaly ditemukan.")
+    
 
-    return anomaly_rows.drop_duplicates()
+
+
