@@ -312,7 +312,7 @@ def run():
         "td6_4pl": transform_td6,
         "td6_aggregator": transform_td6,
         "td6_shop_laz": transform_td6,
-        "rdo_rtd_b2b": transform_rdo_rtd,
+        # "rdo_rtd_b2b": transform_rdo_rtd,
     }
 
     tracker_results = {}
