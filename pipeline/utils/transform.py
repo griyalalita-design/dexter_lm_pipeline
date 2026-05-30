@@ -136,7 +136,7 @@ def transform_n1_completion(df_raw):
 
     return tracker_df
 
-def lnd(df_raw):
+def transform_lnd(df_raw):
 
     if df_raw.empty:
         return df_raw
@@ -152,7 +152,7 @@ def lnd(df_raw):
 
     return tracker_df
 
-def n0_rsvn(df_raw):
+def transform_rsvn_completed(df_raw):
 
     if df_raw.empty:
         return df_raw
@@ -168,7 +168,7 @@ def n0_rsvn(df_raw):
 
     return tracker_df
 
-def poda_val(df_raw):
+def transform_poda(df_raw):
 
     if df_raw.empty:
         return df_raw
@@ -184,7 +184,7 @@ def poda_val(df_raw):
 
     return tracker_df
 
-def pu_rot(df_raw):
+def transform_pu_rot(df_raw):
 
     if df_raw.empty:
         return df_raw
@@ -200,7 +200,7 @@ def pu_rot(df_raw):
 
     return tracker_df
 
-def pivot_td6 (df_raw):
+def transform_td6 (df_raw):
 
     if df_raw.empty:
         return df_raw
@@ -212,6 +212,22 @@ def pivot_td6 (df_raw):
         "total_all_orders": "sum"
     })
     .sort_values("hub")
+)
+
+    return tracker_df
+
+def transform_completion_timeslot (df_raw):
+
+    if df_raw.empty:
+        return df_raw
+    tracker_df = (
+    df_raw
+    .groupby(["date", "dest_hub_name"], as_index=False)
+    .agg({
+        "hit_completion":"sum",
+        "tracking_id": "count"
+    })
+    .sort_values("dest_hub_name")
 )
 
     return tracker_df
