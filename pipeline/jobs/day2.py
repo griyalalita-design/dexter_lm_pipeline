@@ -5,8 +5,12 @@ from datetime import datetime, timedelta
 import pandas as pd
 
 from utils.metabase import tarik_metabase, get_token
-from utils.gsheet import read_sheet
+from utils.gsheet import read_sheet, write_sheet
 from config.settings import METABASE_CONFIG, GSHEET
+from utils.transform import (
+    transform_attempt,
+    transform_n0_completion,
+)
 
 
 SHIPPER_GROUPS = {
@@ -60,30 +64,30 @@ SHIPPER_GROUPS = {
 
 LM_REPORT_PLAN = [
     # Attempt Rate N0
-    # {"report_key": "attempt_n0", "segment_key": "agg_fsbd"},
-    # {"report_key": "attempt_n0", "segment_key": "b2c_cc_agg_fsbd"},
-    # {"report_key": "attempt_n0", "segment_key": "laz_shop_tt"},
+    {"report_key": "attempt_n0", "segment_key": "agg_fsbd"},
+    {"report_key": "attempt_n0", "segment_key": "b2c_cc_agg_fsbd"},
+    {"report_key": "attempt_n0", "segment_key": "laz_shop_tt"},
 
     # Completion N0
     {"report_key": "n0_completion", "segment_key": "b2b_all_b2c_cc"},
     {"report_key": "n0_completion", "segment_key": "b2b_dry_cc_next"},
     {"report_key": "n0_completion", "segment_key": "tt"},
 
-    # Completion N1
-    {"report_key": "n1_completion"},
+    # # Completion N1
+    # {"report_key": "n1_completion"},
 
-    # Others
-    {"report_key": "completion_within_timeslot"},
-    {"report_key": "lnd_b2b_all_b2c_cc"},
-    {"report_key": "no_rsvn_completed"},
-    {"report_key": "no_rsvn_completed", "segment_key": "b2br_key_shipper"},
-    {"report_key": "no_rsvn_completed", "segment_key": "sds_cc"},
-    {"report_key": "poda_val_sho_laz"},
-    {"report_key": "pu_rot"},
-    {"report_key": "td6", "segment_key": "4pl"},
-    {"report_key": "td6", "segment_key": "aggregator"},
-    {"report_key": "td6", "segment_key": "shop_laz"},
-    {"report_key": "rdo_rtd_b2b"},
+    # # Others
+    # {"report_key": "completion_within_timeslot"},
+    # {"report_key": "lnd_b2b_all_b2c_cc"},
+    # {"report_key": "no_rsvn_completed"},
+    # {"report_key": "no_rsvn_completed", "segment_key": "b2br_key_shipper"},
+    # {"report_key": "no_rsvn_completed", "segment_key": "sds_cc"},
+    # {"report_key": "poda_val_sho_laz"},
+    # {"report_key": "pu_rot"},
+    # {"report_key": "td6", "segment_key": "4pl"},
+    # {"report_key": "td6", "segment_key": "aggregator"},
+    # {"report_key": "td6", "segment_key": "shop_laz"},
+    # {"report_key": "rdo_rtd_b2b"},
 ]
 
 
@@ -288,12 +292,149 @@ def run():
             results[result_name] = pd.DataFrame()
 
     print("\n[3/4] Summary result shapes:")
+    
     for key, df in results.items():
         print(f"- {key}: {df.shape}")
 
-    print("\n=== LM DAY 2 - PULL METABASE ONLY DONE ===")
+    print("\n[4/4] pivot resulr:")
 
-    return results
+       print("\n[TRANSFORM] Build tracker outputs...")
+    tracker_results = {}
+
+    # Attempt
+    if "attempt_n0_agg_fsbd" in results:
+        tracker_results["attempt_n0_agg_fsbd"] = transform_attempt(
+            results["attempt_n0_agg_fsbd"]
+        )
+
+    if "attempt_n0_b2c_cc_agg_fsbd" in results:
+        tracker_results["attempt_n0_b2c_cc_agg_fsbd"] = transform_attempt(
+            results["attempt_n0_b2c_cc_agg_fsbd"]
+        )
+
+    if "attempt_n0_laz_shop_tt" in results:
+        tracker_results["attempt_n0_laz_shop_tt"] = transform_attempt(
+            results["attempt_n0_laz_shop_tt"]
+        )
+
+    # Completion
+    if "n0_completion_b2b_all_b2c_cc" in results:
+        tracker_results["n0_completion_b2b_all_b2c_cc"] = transform_n0_completion(
+            results["n0_completion_b2b_all_b2c_cc"]
+        )
+
+    if "n0_completion_b2b_dry_cc_next" in results:
+        tracker_results["n0_completion_b2b_dry_cc_next"] = transform_n0_completion(
+            results["n0_completion_b2b_dry_cc_next"]
+        )
+
+    if "n0_completion_tt" in results:
+        tracker_results["n0_completion_tt"] = transform_n0_completion(
+            results["n0_completion_tt"]
+        )
+
+    print("\nSummary tracker output shapes:")
+    for key, df in tracker_results.items():
+        print(f"- {key}: {df.shape}")
+
+    TRACKER_WRITE_MAP = {
+        "attempt_n0_agg_fsbd": [
+            {
+                "tracker_key": "tracker_sum",
+                "tab_key": "raw_data_otif",
+                "start_cell": "AT5",
+            },
+        ],
+
+        "attempt_n0_b2c_cc_agg_fsbd": [
+            {
+                "tracker_key": "tracker_gj",
+                "tab_key": "raw_data_otif",
+                "start_cell": "BD5",
+            },
+            {
+                "tracker_key": "tracker_wj",
+                "tab_key": "raw_data_otif",
+                "start_cell": "BD5",
+            },
+        ],
+
+        "attempt_n0_laz_shop_tt": [
+            {
+                "tracker_key": "tracker_gj",
+                "tab_key": "raw_data_otif",
+                "start_cell": "BJ5",
+            },
+        ],
+
+        "n0_completion_b2b_all_b2c_cc": [
+            {
+                "tracker_key": "tracker_sum",
+                "tab_key": "raw_data_otif",
+                "start_cell": "AN5",
+            },
+        ],
+
+        "n0_completion_b2b_dry_cc_next": [
+            {
+                "tracker_key": "tracker_gj",
+                "tab_key": "raw_data_otif",
+                "start_cell": "AX5",
+            },
+            {
+                "tracker_key": "tracker_wj",
+                "tab_key": "raw_data_otif",
+                "start_cell": "AX5",
+            },
+        ],
+
+        "n0_completion_tt": [
+            {
+                "tracker_key": "tracker_wj",
+                "tab_key": "raw_data_otif",
+                "start_cell": "BJ5",
+            },
+        ],
+    }
+
+    print("\n[WRITE] Dump tracker outputs...")
+
+    for result_key, destinations in TRACKER_WRITE_MAP.items():
+
+        if result_key not in tracker_results:
+            print(f"[SKIP] {result_key}: not found in tracker_results")
+            continue
+
+        df_to_write = tracker_results[result_key]
+
+        for dest in destinations:
+            tracker_key = dest["tracker_key"]
+            tab_key = dest["tab_key"]
+            start_cell = dest["start_cell"]
+
+            tracker_cfg = GSHEET[tracker_key]
+            sheet_id = tracker_cfg["sheet_id"]
+            sheet_name = tracker_cfg["tabs"][tab_key]
+
+            print(
+                f"Writing {result_key} -> "
+                f"{tracker_key} | {sheet_name} | {start_cell}"
+            )
+
+            write_sheet(
+                spreadsheet_id=sheet_id,
+                sheet_name=sheet_name,
+                df=df_to_write,
+                start_cell=start_cell,
+                include_header=False,
+            )
+
+    print("\n=== LM DAY 2 DONE ===")
+
+    return {
+        "raw": results,
+        "tracker": tracker_results,
+    }
 
 
 if __name__ == "__main__":
