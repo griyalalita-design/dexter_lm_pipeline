@@ -218,7 +218,7 @@ def should_skip_report(report_key):
 
 
 def run():
-    print("=== LM DAY 2 - PULL METABASE ONLY START ===")
+    print("=== LM DAY 2 START ===")
 
     start_date, end_date, period_str = get_previous_month_period()
 
@@ -238,29 +238,13 @@ def run():
         "end_date": end_date,
         "period_str": period_str,
         "start_end": start_date,
-
         "driver_list": [
-            "CDA Driver",
-            "Driver",
-            "Freelance CDA Driver",
-            "Freelance Driver",
-            "Junior Coldchain Driver",
-            "Captain Sameday",
-            "Driver",
-            "Freelance Sameday Driver",
-            "Freelance Sameday Rider",
-            "Junior Sameday Rider",
-            "On-call Driver",
-            "Rider",
-            "Rider Bulky",
-            "Sameday Rider",
-            "Senior Sameday Rider",
-            "SPH Driver",
-            "SPH Leader",
-            "SPH Rider",
-            "SPH+(Plus) Rider",
+            "CDA Driver", "Driver", "Freelance CDA Driver", "Freelance Driver",
+            "Junior Coldchain Driver", "Captain Sameday", "Freelance Sameday Driver",
+            "Freelance Sameday Rider", "Junior Sameday Rider", "On-call Driver",
+            "Rider", "Rider Bulky", "Sameday Rider", "Senior Sameday Rider",
+            "SPH Driver", "SPH Leader", "SPH Rider", "SPH+(Plus) Rider",
         ],
-
         **shipper_runtime,
     }
 
@@ -271,7 +255,6 @@ def run():
     for item in LM_REPORT_PLAN:
         report_key = item["report_key"]
         segment_key = item.get("segment_key")
-
         result_name = f"{report_key}_{segment_key}" if segment_key else report_key
 
         if should_skip_report(report_key):
@@ -285,53 +268,36 @@ def run():
                 token=token,
                 segment_key=segment_key,
             )
-
         except Exception as e:
             print(f"\n[FAILED] {result_name}")
             print(repr(e))
             results[result_name] = pd.DataFrame()
 
-    print("\n[3/4] Summary result shapes:")
-    
+    print("\n[3/4] Summary raw result shapes:")
     for key, df in results.items():
         print(f"- {key}: {df.shape}")
 
-    print("\n[4/4] pivot resulr:")
+    print("\n[4/4] Transform tracker outputs...")
 
-       print("\n[TRANSFORM] Build tracker outputs...")
     tracker_results = {}
 
-    # Attempt
     if "attempt_n0_agg_fsbd" in results:
-        tracker_results["attempt_n0_agg_fsbd"] = transform_attempt(
-            results["attempt_n0_agg_fsbd"]
-        )
+        tracker_results["attempt_n0_agg_fsbd"] = transform_attempt(results["attempt_n0_agg_fsbd"])
 
     if "attempt_n0_b2c_cc_agg_fsbd" in results:
-        tracker_results["attempt_n0_b2c_cc_agg_fsbd"] = transform_attempt(
-            results["attempt_n0_b2c_cc_agg_fsbd"]
-        )
+        tracker_results["attempt_n0_b2c_cc_agg_fsbd"] = transform_attempt(results["attempt_n0_b2c_cc_agg_fsbd"])
 
     if "attempt_n0_laz_shop_tt" in results:
-        tracker_results["attempt_n0_laz_shop_tt"] = transform_attempt(
-            results["attempt_n0_laz_shop_tt"]
-        )
+        tracker_results["attempt_n0_laz_shop_tt"] = transform_attempt(results["attempt_n0_laz_shop_tt"])
 
-    # Completion
     if "n0_completion_b2b_all_b2c_cc" in results:
-        tracker_results["n0_completion_b2b_all_b2c_cc"] = transform_n0_completion(
-            results["n0_completion_b2b_all_b2c_cc"]
-        )
+        tracker_results["n0_completion_b2b_all_b2c_cc"] = transform_n0_completion(results["n0_completion_b2b_all_b2c_cc"])
 
     if "n0_completion_b2b_dry_cc_next" in results:
-        tracker_results["n0_completion_b2b_dry_cc_next"] = transform_n0_completion(
-            results["n0_completion_b2b_dry_cc_next"]
-        )
+        tracker_results["n0_completion_b2b_dry_cc_next"] = transform_n0_completion(results["n0_completion_b2b_dry_cc_next"])
 
     if "n0_completion_tt" in results:
-        tracker_results["n0_completion_tt"] = transform_n0_completion(
-            results["n0_completion_tt"]
-        )
+        tracker_results["n0_completion_tt"] = transform_n0_completion(results["n0_completion_tt"])
 
     print("\nSummary tracker output shapes:")
     for key, df in tracker_results.items():
@@ -339,68 +305,30 @@ def run():
 
     TRACKER_WRITE_MAP = {
         "attempt_n0_agg_fsbd": [
-            {
-                "tracker_key": "tracker_sum",
-                "tab_key": "raw_data_otif",
-                "start_cell": "AT5",
-            },
+            {"tracker_key": "tracker_sum", "tab_key": "raw_data_otif", "start_cell": "AT5"},
         ],
-
         "attempt_n0_b2c_cc_agg_fsbd": [
-            {
-                "tracker_key": "tracker_gj",
-                "tab_key": "raw_data_otif",
-                "start_cell": "BD5",
-            },
-            {
-                "tracker_key": "tracker_wj",
-                "tab_key": "raw_data_otif",
-                "start_cell": "BD5",
-            },
+            {"tracker_key": "tracker_gj", "tab_key": "raw_data_otif", "start_cell": "BD5"},
+            {"tracker_key": "tracker_wj", "tab_key": "raw_data_otif", "start_cell": "BD5"},
         ],
-
         "attempt_n0_laz_shop_tt": [
-            {
-                "tracker_key": "tracker_gj",
-                "tab_key": "raw_data_otif",
-                "start_cell": "BJ5",
-            },
+            {"tracker_key": "tracker_gj", "tab_key": "raw_data_otif", "start_cell": "BJ5"},
         ],
-
         "n0_completion_b2b_all_b2c_cc": [
-            {
-                "tracker_key": "tracker_sum",
-                "tab_key": "raw_data_otif",
-                "start_cell": "AN5",
-            },
+            {"tracker_key": "tracker_sum", "tab_key": "raw_data_otif", "start_cell": "AN5"},
         ],
-
         "n0_completion_b2b_dry_cc_next": [
-            {
-                "tracker_key": "tracker_gj",
-                "tab_key": "raw_data_otif",
-                "start_cell": "AX5",
-            },
-            {
-                "tracker_key": "tracker_wj",
-                "tab_key": "raw_data_otif",
-                "start_cell": "AX5",
-            },
+            {"tracker_key": "tracker_gj", "tab_key": "raw_data_otif", "start_cell": "AX5"},
+            {"tracker_key": "tracker_wj", "tab_key": "raw_data_otif", "start_cell": "AX5"},
         ],
-
         "n0_completion_tt": [
-            {
-                "tracker_key": "tracker_wj",
-                "tab_key": "raw_data_otif",
-                "start_cell": "BJ5",
-            },
+            {"tracker_key": "tracker_wj", "tab_key": "raw_data_otif", "start_cell": "BJ5"},
         ],
     }
 
     print("\n[WRITE] Dump tracker outputs...")
 
     for result_key, destinations in TRACKER_WRITE_MAP.items():
-
         if result_key not in tracker_results:
             print(f"[SKIP] {result_key}: not found in tracker_results")
             continue
@@ -416,10 +344,7 @@ def run():
             sheet_id = tracker_cfg["sheet_id"]
             sheet_name = tracker_cfg["tabs"][tab_key]
 
-            print(
-                f"Writing {result_key} -> "
-                f"{tracker_key} | {sheet_name} | {start_cell}"
-            )
+            print(f"Writing {result_key} -> {tracker_key} | {sheet_name} | {start_cell}")
 
             write_sheet(
                 spreadsheet_id=sheet_id,
