@@ -281,27 +281,23 @@ def run():
             print(repr(e))
             results[result_name] = pd.DataFrame()
 
-    print("\n[3/4] Summary raw result shapes:")
+        print("\n[3/4] Summary raw result shapes:")
     for key, df in results.items():
         print(f"- {key}: {df.shape}")
 
-        print("\n[4/4] Transform tracker outputs...")
+    print("\n[4/4] Transform tracker outputs...")
 
     TRANSFORM_MAP = {
-        # Attempt Rate N0
         "attempt_n0_agg_fsbd": transform_attempt,
         "attempt_n0_b2c_cc_agg_fsbd": transform_attempt,
         "attempt_n0_laz_shop_tt": transform_attempt,
 
-        # Completion N0
         "n0_completion_b2b_all_b2c_cc": transform_n0_completion,
         "n0_completion_b2b_dry_cc_next": transform_n0_completion,
         "n0_completion_tt": transform_n0_completion,
 
-        # Completion N1
         "n1_completion": transform_n1_completion,
 
-        # Others
         "completion_within_timeslot": transform_completion_timeslot,
         "lnd_b2b_all_b2c_cc": transform_lnd,
         "no_rsvn_completed": transform_rsvn_completed,
@@ -312,7 +308,6 @@ def run():
         "td6_4pl": transform_td6,
         "td6_aggregator": transform_td6,
         "td6_shop_laz": transform_td6,
-        # "rdo_rtd_b2b": transform_rdo_rtd,
     }
 
     tracker_results = {}
@@ -331,10 +326,15 @@ def run():
             print(repr(e))
             tracker_results[result_key] = pd.DataFrame()
 
+    # DIRECT TO TRACKER - no transform
+    if "rdo_rtd_b2b" in results:
+        tracker_results["rdo_rtd_b2b"] = results["rdo_rtd_b2b"]
+
     print("\nSummary tracker output shapes:")
     for key, df in tracker_results.items():
         print(f"- {key}: {df.shape}")
-        TRACKER_WRITE_MAP = {
+
+    TRACKER_WRITE_MAP = {
         "attempt_n0_agg_fsbd": [
             {"tracker_key": "tracker_sum", "tab_key": "raw_data_otif", "start_cell": "AS5"},
         ],
