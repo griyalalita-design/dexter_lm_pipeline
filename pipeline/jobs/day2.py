@@ -17,15 +17,11 @@ from utils.transform import (
     transform_poda,
     transform_pu_rot,
     transform_td6,
-    # transform_rdo_rtd,
 )
 
 
 SHIPPER_GROUPS = {
-    "agg_fsbd": [
-        "FSBD Key Shipper",
-        "Aggregator Keyshipper",
-    ],
+    "agg_fsbd": ["FSBD Key Shipper", "Aggregator Keyshipper"],
     "b2c_cc_agg_fsbd": [
         "B2C Cold Chain Sameday",
         "B2C Cold Chain Next Day",
@@ -39,18 +35,9 @@ SHIPPER_GROUPS = {
         "B2C Cold Chain Sameday",
         "B2C Cold Chain Next Day",
     ],
-    "b2b_dry_cc_next": [
-        # "B2B Dry Reguler",
-        "B2C Cold Chain Next Day",
-    ],
-    "b2b_sds_dry_cold_prem": [
-        "B2B Sameday Premium",
-        # "B2C Cold Chain Sameday",
-    ],
-    "b2b_sds_dry_cold_reg": [
-        "B2B Sameday Reguler",
-        "B2C Cold Chain Sameday",
-    ],
+    "b2b_dry_cc_next": ["B2C Cold Chain Next Day"],
+    "b2b_sds_dry_cold_prem": ["B2B Sameday Premium"],
+    "b2b_sds_dry_cold_reg": ["B2B Sameday Reguler", "B2C Cold Chain Sameday"],
     "b2br_key_shipper": [
         "B2B Dry Reguler",
         "B2B Sameday Reguler",
@@ -64,27 +51,18 @@ SHIPPER_GROUPS = {
         "B2C Cold Chain Sameday",
         "B2C Cold Chain Next Day",
     ],
-    "aggregator": [
-        "Aggregator Keyshipper",
-    ],
+    "aggregator": ["Aggregator Keyshipper"],
 }
 
 
 LM_REPORT_PLAN = [
-    # Attempt Rate N0
     {"report_key": "attempt_n0", "segment_key": "agg_fsbd"},
     {"report_key": "attempt_n0", "segment_key": "b2c_cc_agg_fsbd"},
     {"report_key": "attempt_n0", "segment_key": "laz_shop_tt"},
-
-    # Completion N0
     {"report_key": "n0_completion", "segment_key": "b2b_all_b2c_cc"},
     {"report_key": "n0_completion", "segment_key": "b2b_dry_cc_next"},
     {"report_key": "n0_completion", "segment_key": "tt"},
-
-    # Completion N1
     {"report_key": "n1_completion"},
-
-    # Others
     {"report_key": "completion_within_timeslot"},
     {"report_key": "lnd_b2b_all_b2c_cc"},
     {"report_key": "no_rsvn_completed"},
@@ -200,12 +178,10 @@ def run_report(report_key, runtime_values, token, segment_key=None):
     )
 
     print(f"{desc} shape: {df_result.shape}")
-    print(f"{desc} shape: {df_result.shape}")
-    
+
     print("\nColumns:")
     for col in df_result.columns:
         print(f" - {col}")
-
 
     if not df_result.empty:
         print(df_result.head(5).to_string(index=False))
@@ -280,7 +256,7 @@ def run():
             print(f"\n[FAILED] {result_name}")
             print(repr(e))
             results[result_name] = pd.DataFrame()
-            
+
     print("\n[3/4] Summary raw result shapes:")
     for key, df in results.items():
         print(f"- {key}: {df.shape}")
@@ -317,11 +293,13 @@ def run():
         try:
             tracker_results[result_key] = transform_func(results[result_key])
             print(f"[OK TRANSFORM] {result_key}: {tracker_results[result_key].shape}")
+
         except Exception as e:
             print(f"[FAILED TRANSFORM] {result_key}")
             print(repr(e))
             tracker_results[result_key] = pd.DataFrame()
 
+    # DIRECT TO TRACKER - no transform
     if "rdo_rtd_b2b" in results:
         tracker_results["rdo_rtd_b2b"] = results["rdo_rtd_b2b"]
 
@@ -333,81 +311,63 @@ def run():
         "attempt_n0_agg_fsbd": [
             {"tracker_key": "tracker_sum", "tab_key": "raw_data_otif", "start_cell": "AS5"},
         ],
-
         "attempt_n0_b2c_cc_agg_fsbd": [
             {"tracker_key": "tracker_gj", "tab_key": "raw_data_otif", "start_cell": "BC5"},
             {"tracker_key": "tracker_wj", "tab_key": "raw_data_otif", "start_cell": "BC5"},
         ],
-
         "attempt_n0_laz_shop_tt": [
             {"tracker_key": "tracker_gj", "tab_key": "raw_data_otif", "start_cell": "BI5"},
         ],
-
         "n0_completion_b2b_all_b2c_cc": [
             {"tracker_key": "tracker_sum", "tab_key": "raw_data_otif", "start_cell": "AM5"},
         ],
-
         "n0_completion_b2b_dry_cc_next": [
             {"tracker_key": "tracker_gj", "tab_key": "raw_data_otif", "start_cell": "AW5"},
             {"tracker_key": "tracker_wj", "tab_key": "raw_data_otif", "start_cell": "AW5"},
         ],
-
         "n0_completion_tt": [
             {"tracker_key": "tracker_wj", "tab_key": "raw_data_otif", "start_cell": "BI5"},
         ],
-
         "n1_completion": [
             {"tracker_key": "tracker_java", "tab_key": "raw_data_otif", "start_cell": "AP5"},
         ],
-
- 
         "completion_within_timeslot": [
             {"tracker_key": "tracker_gj", "tab_key": "raw_data_otif", "start_cell": "AP5"},
         ],
-
         "lnd_b2b_all_b2c_cc": [
             {"tracker_key": "tracker_gj", "tab_key": "raw_data_int_comp", "start_cell": "B5"},
             {"tracker_key": "tracker_java", "tab_key": "raw_data_int_comp", "start_cell": "B5"},
             {"tracker_key": "tracker_sum", "tab_key": "raw_data_int_comp", "start_cell": "B5"},
         ],
-
         "no_rsvn_completed": [
             {"tracker_key": "tracker_sum", "tab_key": "raw_data_otif", "start_cell": "Z5"},
         ],
-
         "no_rsvn_completed_b2br_key_shipper": [
             {"tracker_key": "tracker_java", "tab_key": "raw_data_otif", "start_cell": "AJ5"},
         ],
-
         "no_rsvn_completed_sds_cc": [
             {"tracker_key": "tracker_gj", "tab_key": "raw_data_otif", "start_cell": "AJ5"},
         ],
-
         "poda_val_sho_laz": [
             {"tracker_key": "tracker_gj", "tab_key": "raw_data_int_comp", "start_cell": "AB5"},
             {"tracker_key": "tracker_java", "tab_key": "raw_data_int_comp", "start_cell": "U5"},
             {"tracker_key": "tracker_sum", "tab_key": "raw_data_int_comp", "start_cell": "T5"},
         ],
-
         "pu_rot": [
             {"tracker_key": "tracker_java", "tab_key": "raw_data_otif", "start_cell": "O5"},
             {"tracker_key": "tracker_sum", "tab_key": "raw_data_otif", "start_cell": "N5"},
         ],
-
         "td6_4pl": [
             {"tracker_key": "tracker_java", "tab_key": "raw_data_otif", "start_cell": "B5"},
             {"tracker_key": "tracker_sum", "tab_key": "raw_data_otif", "start_cell": "T5"},
         ],
-
         "td6_aggregator": [
             {"tracker_key": "tracker_gj", "tab_key": "raw_data_otif", "start_cell": "B5"},
         ],
-
         "td6_shop_laz": [
             {"tracker_key": "tracker_java", "tab_key": "raw_data_otif", "start_cell": "V5"},
             {"tracker_key": "tracker_sum", "tab_key": "raw_data_otif", "start_cell": "B5"},
         ],
-
         "rdo_rtd_b2b": [
             {"tracker_key": "tracker_gj", "tab_key": "raw_data_otif", "start_cell": "ISI_CELL"},
         ],
@@ -435,6 +395,10 @@ def run():
                 print(f"[SKIP WRITE] {result_key}: start_cell belum diisi")
                 continue
 
+            if tracker_key not in GSHEET:
+                print(f"[SKIP WRITE] {result_key}: tracker_key belum ada di GSHEET: {tracker_key}")
+                continue
+
             tracker_cfg = GSHEET[tracker_key]
             sheet_id = tracker_cfg["sheet_id"]
             sheet_name = tracker_cfg["tabs"][tab_key]
@@ -455,7 +419,6 @@ def run():
         "raw": results,
         "tracker": tracker_results,
     }
-
 
 
 if __name__ == "__main__":
