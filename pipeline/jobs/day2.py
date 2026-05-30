@@ -188,6 +188,12 @@ def run_report(report_key, runtime_values, token, segment_key=None):
     )
 
     print(f"{desc} shape: {df_result.shape}")
+    print(f"{desc} shape: {df_result.shape}")
+    
+    print("\nColumns:")
+    for col in df_result.columns:
+        print(f" - {col}")
+
 
     if not df_result.empty:
         print(df_result.head(5).to_string(index=False))
