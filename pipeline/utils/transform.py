@@ -120,7 +120,53 @@ def transform_n0_completion(df_raw):
 
     return tracker_df
 
-    
+def transform_n1_completion(df_raw):
+
+    if df_raw.empty:
+        return df_raw
+    tracker_df = (
+    df_raw
+    .groupby("dest_hub_name", as_index=False)
+    .agg({
+        "adj_n1_delivery_complete_flag":"sum",
+        "vol": "sum"
+    })
+    .sort_values("dest_hub_name")
+)
+
+    return tracker_df
+
+def lnd(df_raw):
+
+    if df_raw.empty:
+        return df_raw
+    tracker_df = (
+    df_raw
+    .groupby("hub", as_index=False)
+    .agg({
+        "total_loss_damage":"sum",
+        "total_volume": "sum"
+    })
+    .sort_values("hub")
+)
+
+    return tracker_df
+
+def n0_rsvn(df_raw):
+
+    if df_raw.empty:
+        return df_raw
+    tracker_df = (
+    df_raw
+    .groupby(["rsvn_ready_date", "hub_name"], as_index=False)
+    .agg({
+        "rsvn_n0_success_hit":"sum",
+        "rsvn_ready": "sum"
+    })
+    .sort_values("hub_name")
+)
+
+    return tracker_df
 
     
 
