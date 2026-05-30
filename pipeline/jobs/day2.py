@@ -17,7 +17,7 @@ from utils.transform import (
     transform_poda,
     transform_pu_rot,
     transform_td6,
-    transform_rdo_rtd,
+    # transform_rdo_rtd,
 )
 
 
@@ -285,52 +285,136 @@ def run():
     for key, df in results.items():
         print(f"- {key}: {df.shape}")
 
-    print("\n[4/4] Transform tracker outputs...")
+        print("\n[4/4] Transform tracker outputs...")
+
+    TRANSFORM_MAP = {
+        # Attempt Rate N0
+        "attempt_n0_agg_fsbd": transform_attempt,
+        "attempt_n0_b2c_cc_agg_fsbd": transform_attempt,
+        "attempt_n0_laz_shop_tt": transform_attempt,
+
+        # Completion N0
+        "n0_completion_b2b_all_b2c_cc": transform_n0_completion,
+        "n0_completion_b2b_dry_cc_next": transform_n0_completion,
+        "n0_completion_tt": transform_n0_completion,
+
+        # Completion N1
+        "n1_completion": transform_n1_completion,
+
+        # Others
+        "completion_within_timeslot": transform_completion_timeslot,
+        "lnd_b2b_all_b2c_cc": transform_lnd,
+        "no_rsvn_completed": transform_rsvn_completed,
+        "no_rsvn_completed_b2br_key_shipper": transform_rsvn_completed,
+        "no_rsvn_completed_sds_cc": transform_rsvn_completed,
+        "poda_val_sho_laz": transform_poda,
+        "pu_rot": transform_pu_rot,
+        "td6_4pl": transform_td6,
+        "td6_aggregator": transform_td6,
+        "td6_shop_laz": transform_td6,
+        "rdo_rtd_b2b": transform_rdo_rtd,
+    }
 
     tracker_results = {}
 
-    if "attempt_n0_agg_fsbd" in results:
-        tracker_results["attempt_n0_agg_fsbd"] = transform_attempt(results["attempt_n0_agg_fsbd"])
+    for result_key, transform_func in TRANSFORM_MAP.items():
+        if result_key not in results:
+            print(f"[SKIP TRANSFORM] {result_key}: not found in raw results")
+            continue
 
-    if "attempt_n0_b2c_cc_agg_fsbd" in results:
-        tracker_results["attempt_n0_b2c_cc_agg_fsbd"] = transform_attempt(results["attempt_n0_b2c_cc_agg_fsbd"])
+        try:
+            tracker_results[result_key] = transform_func(results[result_key])
+            print(f"[OK TRANSFORM] {result_key}: {tracker_results[result_key].shape}")
 
-    if "attempt_n0_laz_shop_tt" in results:
-        tracker_results["attempt_n0_laz_shop_tt"] = transform_attempt(results["attempt_n0_laz_shop_tt"])
-
-    if "n0_completion_b2b_all_b2c_cc" in results:
-        tracker_results["n0_completion_b2b_all_b2c_cc"] = transform_n0_completion(results["n0_completion_b2b_all_b2c_cc"])
-
-    if "n0_completion_b2b_dry_cc_next" in results:
-        tracker_results["n0_completion_b2b_dry_cc_next"] = transform_n0_completion(results["n0_completion_b2b_dry_cc_next"])
-
-    if "n0_completion_tt" in results:
-        tracker_results["n0_completion_tt"] = transform_n0_completion(results["n0_completion_tt"])
+        except Exception as e:
+            print(f"[FAILED TRANSFORM] {result_key}")
+            print(repr(e))
+            tracker_results[result_key] = pd.DataFrame()
 
     print("\nSummary tracker output shapes:")
     for key, df in tracker_results.items():
         print(f"- {key}: {df.shape}")
-
-    TRACKER_WRITE_MAP = {
+        TRACKER_WRITE_MAP = {
         "attempt_n0_agg_fsbd": [
-            {"tracker_key": "tracker_sum", "tab_key": "raw_data_otif", "start_cell": "AT5"},
+            {"tracker_key": "tracker_sum", "tab_key": "raw_data_otif", "start_cell": "AS5"},
         ],
+
         "attempt_n0_b2c_cc_agg_fsbd": [
-            {"tracker_key": "tracker_gj", "tab_key": "raw_data_otif", "start_cell": "BD5"},
-            {"tracker_key": "tracker_wj", "tab_key": "raw_data_otif", "start_cell": "BD5"},
+            {"tracker_key": "tracker_gj", "tab_key": "raw_data_otif", "start_cell": "BC5"},
+            {"tracker_key": "tracker_wj", "tab_key": "raw_data_otif", "start_cell": "BC5"},
         ],
+
         "attempt_n0_laz_shop_tt": [
-            {"tracker_key": "tracker_gj", "tab_key": "raw_data_otif", "start_cell": "BJ5"},
+            {"tracker_key": "tracker_gj", "tab_key": "raw_data_otif", "start_cell": "BI5"},
         ],
+
         "n0_completion_b2b_all_b2c_cc": [
-            {"tracker_key": "tracker_sum", "tab_key": "raw_data_otif", "start_cell": "AN5"},
+            {"tracker_key": "tracker_sum", "tab_key": "raw_data_otif", "start_cell": "AM5"},
         ],
+
         "n0_completion_b2b_dry_cc_next": [
-            {"tracker_key": "tracker_gj", "tab_key": "raw_data_otif", "start_cell": "AX5"},
-            {"tracker_key": "tracker_wj", "tab_key": "raw_data_otif", "start_cell": "AX5"},
+            {"tracker_key": "tracker_gj", "tab_key": "raw_data_otif", "start_cell": "AW5"},
+            {"tracker_key": "tracker_wj", "tab_key": "raw_data_otif", "start_cell": "AW5"},
         ],
+
         "n0_completion_tt": [
-            {"tracker_key": "tracker_wj", "tab_key": "raw_data_otif", "start_cell": "BJ5"},
+            {"tracker_key": "tracker_wj", "tab_key": "raw_data_otif", "start_cell": "BI5"},
+        ],
+
+        "n1_completion": [
+            {"tracker_key": "tracker_java", "tab_key": "raw_data_otif", "start_cell": "AP5"},
+        ],
+
+ 
+        "completion_within_timeslot": [
+            {"tracker_key": "tracker_gj", "tab_key": "raw_data_otif", "start_cell": "AP5"},
+        ],
+
+        "lnd_b2b_all_b2c_cc": [
+            {"tracker_key": "tracker_gj", "tab_key": "raw_data_int_comp", "start_cell": "B5"},
+            {"tracker_key": "tracker_java", "tab_key": "raw_data_int_comp", "start_cell": "B5"},
+            {"tracker_key": "tracker_sum", "tab_key": "raw_data_int_comp", "start_cell": "B5"},
+        ],
+
+        "no_rsvn_completed": [
+            {"tracker_key": "tracker_sum", "tab_key": "raw_data_otif", "start_cell": "Z5"},
+        ],
+
+        "no_rsvn_completed_b2br_key_shipper": [
+            {"tracker_key": "tracker_java", "tab_key": "raw_data_otif", "start_cell": "AJ5"},
+        ],
+
+        "no_rsvn_completed_sds_cc": [
+            {"tracker_key": "tracker_gj", "tab_key": "raw_data_otif", "start_cell": "AJ5"},
+        ],
+
+        "poda_val_sho_laz": [
+            {"tracker_key": "tracker_gj", "tab_key": "raw_data_int_comp", "start_cell": "AB5"},
+            {"tracker_key": "tracker_java", "tab_key": "raw_data_int_comp", "start_cell": "U5"},
+            {"tracker_key": "tracker_sum", "tab_key": "raw_data_int_comp", "start_cell": "T5"},
+        ],
+
+        "pu_rot": [
+            {"tracker_key": "tracker_java", "tab_key": "raw_data_otif", "start_cell": "O5"},
+            {"tracker_key": "tracker_sum", "tab_key": "raw_data_otif", "start_cell": "N5"},
+        ],
+
+        "td6_4pl": [
+            {"tracker_key": "tracker_java", "tab_key": "raw_data_otif", "start_cell": "B5"},
+            {"tracker_key": "tracker_sum", "tab_key": "raw_data_otif", "start_cell": "T5"},
+        ],
+
+        "td6_aggregator": [
+            {"tracker_key": "tracker_gj", "tab_key": "raw_data_otif", "start_cell": "B5"},
+        ],
+
+        "td6_shop_laz": [
+            {"tracker_key": "tracker_java", "tab_key": "raw_data_otif", "start_cell": "V5"},
+            {"tracker_key": "tracker_sum", "tab_key": "raw_data_otif", "start_cell": "B5"},
+        ],
+
+        "rdo_rtd_b2b": [
+            {"tracker_key": "tracker_gj", "tab_key": "raw_data_otif", "start_cell": "ISI_CELL"},
         ],
     }
 
@@ -338,15 +422,23 @@ def run():
 
     for result_key, destinations in TRACKER_WRITE_MAP.items():
         if result_key not in tracker_results:
-            print(f"[SKIP] {result_key}: not found in tracker_results")
+            print(f"[SKIP WRITE] {result_key}: not found in tracker_results")
             continue
 
         df_to_write = tracker_results[result_key]
+
+        if df_to_write.empty:
+            print(f"[SKIP WRITE] {result_key}: dataframe empty")
+            continue
 
         for dest in destinations:
             tracker_key = dest["tracker_key"]
             tab_key = dest["tab_key"]
             start_cell = dest["start_cell"]
+
+            if start_cell == "ISI_CELL":
+                print(f"[SKIP WRITE] {result_key}: start_cell belum diisi")
+                continue
 
             tracker_cfg = GSHEET[tracker_key]
             sheet_id = tracker_cfg["sheet_id"]
@@ -368,6 +460,7 @@ def run():
         "raw": results,
         "tracker": tracker_results,
     }
+
 
 
 if __name__ == "__main__":
