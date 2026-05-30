@@ -56,12 +56,12 @@ SHIPPER_GROUPS = {
 
 
 LM_REPORT_PLAN = [
-    {"report_key": "attempt_n0", "segment_key": "agg_fsbd"},
-    {"report_key": "attempt_n0", "segment_key": "b2c_cc_agg_fsbd"},
-    {"report_key": "attempt_n0", "segment_key": "laz_shop_tt"},
-    {"report_key": "n0_completion", "segment_key": "b2b_all_b2c_cc"},
-    {"report_key": "n0_completion", "segment_key": "b2b_dry_cc_next"},
-    {"report_key": "n0_completion", "segment_key": "tt"},
+    # {"report_key": "attempt_n0", "segment_key": "agg_fsbd"},
+    # {"report_key": "attempt_n0", "segment_key": "b2c_cc_agg_fsbd"},
+    # {"report_key": "attempt_n0", "segment_key": "laz_shop_tt"},
+    # {"report_key": "n0_completion", "segment_key": "b2b_all_b2c_cc"},
+    # {"report_key": "n0_completion", "segment_key": "b2b_dry_cc_next"},
+    # {"report_key": "n0_completion", "segment_key": "tt"},
     {"report_key": "n1_completion"},
     {"report_key": "completion_within_timeslot"},
     {"report_key": "lnd_b2b_all_b2c_cc"},
@@ -369,7 +369,7 @@ def run():
             {"tracker_key": "tracker_sum", "tab_key": "raw_data_otif", "start_cell": "B5"},
         ],
         "rdo_rtd_b2b": [
-            {"tracker_key": "tracker_gj", "tab_key": "raw_data_otif", "start_cell": "ISI_CELL"},
+            {"tracker_key": "rdo_comp", "tab_key": "raw_data", "start_cell": "D2"},
         ],
     }
 
