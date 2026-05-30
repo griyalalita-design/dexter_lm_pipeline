@@ -280,8 +280,8 @@ def run():
             print(f"\n[FAILED] {result_name}")
             print(repr(e))
             results[result_name] = pd.DataFrame()
-
-        print("\n[3/4] Summary raw result shapes:")
+            
+    print("\n[3/4] Summary raw result shapes:")
     for key, df in results.items():
         print(f"- {key}: {df.shape}")
 
@@ -291,13 +291,10 @@ def run():
         "attempt_n0_agg_fsbd": transform_attempt,
         "attempt_n0_b2c_cc_agg_fsbd": transform_attempt,
         "attempt_n0_laz_shop_tt": transform_attempt,
-
         "n0_completion_b2b_all_b2c_cc": transform_n0_completion,
         "n0_completion_b2b_dry_cc_next": transform_n0_completion,
         "n0_completion_tt": transform_n0_completion,
-
         "n1_completion": transform_n1_completion,
-
         "completion_within_timeslot": transform_completion_timeslot,
         "lnd_b2b_all_b2c_cc": transform_lnd,
         "no_rsvn_completed": transform_rsvn_completed,
@@ -320,13 +317,11 @@ def run():
         try:
             tracker_results[result_key] = transform_func(results[result_key])
             print(f"[OK TRANSFORM] {result_key}: {tracker_results[result_key].shape}")
-
         except Exception as e:
             print(f"[FAILED TRANSFORM] {result_key}")
             print(repr(e))
             tracker_results[result_key] = pd.DataFrame()
 
-    # DIRECT TO TRACKER - no transform
     if "rdo_rtd_b2b" in results:
         tracker_results["rdo_rtd_b2b"] = results["rdo_rtd_b2b"]
 
