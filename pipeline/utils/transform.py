@@ -75,82 +75,32 @@ def categorize_shippers(df_pns: pd.DataFrame):
         "key_shipper": key_shipper,
     }
 
-def transform_poa(df_raw: pd.DataFrame) -> pd.DataFrame:
+def transform_attempt(df_raw):
     """
-    Transformasi data POA-IV.
-    Pivot by origin hub: hit, not hit, total.
-
-    Args:
-        df_raw: DataFrame raw dari Metabase
-
-    Returns:
-        DataFrame hasil pivot
+    Attempt Rate N0
+    Tracker Output:
+    Row Labels (dest_hub_name)
+    Sum of n0_delivery_attempt_flag
+    Sum of vol
     """
-    # TODO: sesuaikan nama kolom dengan hasil Metabase kamu
-    # Contoh pivot: origin_hub sebagai index, status sebagai columns
-    df = df_raw.copy()
 
-    pivot = df.pivot_table(
-        index="origin_hub",       # TODO: sesuaikan nama kolom
-        columns="status",         # TODO: sesuaikan nama kolom (hit/not hit)
-        values="shipment_id",     # TODO: sesuaikan nama kolom
-        aggfunc="count",
-        fill_value=0,
-    ).reset_index()
+    if df_raw.empty:
+        return df_raw
 
-    # Rename kolom biar rapi
-    pivot.columns.name = None
-    pivot["total"] = pivot.sum(axis=1, numeric_only=True)
-
-    return pivot
-
-
-def transform_lnd(df_raw: pd.DataFrame) -> pd.DataFrame:
-    """
-    Transformasi data LnD.
-    Filter hanya crossdock, lalu pivot kolom yang diperlukan.
-
-    Args:
-        df_raw: DataFrame raw dari Metabase
-
-    Returns:
-        DataFrame hasil transformasi
-    """
-    df = df_raw.copy()
-
-    # Filter crossdock aja
-    df = df[df["type"] == "crossdock"]  # TODO: sesuaikan nama kolom
-
-    # TODO: pivot sesuai kolom yang diperlukan
-    # Ini placeholder, sesuaikan dengan kebutuhan
-    pivot = df.pivot_table(
-        index="hub_id",           # TODO: sesuaikan
-        values="value",           # TODO: sesuaikan
-        aggfunc="sum",
-        fill_value=0,
-    ).reset_index()
-
-    return pivot
-
-
-def merge_with_staff(df_data: pd.DataFrame, df_staff: pd.DataFrame) -> pd.DataFrame:
-    """
-    Merge data performance dengan staff list tim SORT.
-
-    Args:
-        df_data  : DataFrame performance
-        df_staff : DataFrame staff list
-
-    Returns:
-        DataFrame hasil merge
-    """
-    # TODO: sesuaikan key merge dengan kolom yang ada
-    df_merged = df_data.merge(
-        df_staff,
-        on="hub_id",    # TODO: sesuaikan kolom key
-        how="left",
+    tracker_df = (
+        df_raw
+        .groupby("dest_hub_name", as_index=False)
+        .agg({
+            "n0_delivery_attempt_flag": "sum",
+            "vol": "sum"
+        })
+        .sort_values("dest_hub_name")
     )
-    return df_merged
+
+    return tracker_df
+
+
+
 
 
 def check_anomaly(df: pd.DataFrame, numeric_cols: list) -> pd.DataFrame:
