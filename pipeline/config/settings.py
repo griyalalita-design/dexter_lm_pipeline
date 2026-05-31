@@ -375,7 +375,8 @@ METABASE_CONFIG = {
                 {"id":"370cf3c3-3e21-4af9-98f4-58ddce2fb3cc","type":"string/=","value":"b2b_sds_dry_cold_prem","target":["dimension",["template-tag","sds_instant"]]},
                 {"id":"45c4636d-b5ea-4e91-ac1c-d39eb785f808","type":"string/=","value":"b2b_sds_dry_cold_reg","target":["dimension",["template-tag","sds_reg"]]},
                 {"id":"8837dec8-26c8-41f8-9016-2bf6f9eaa178","type":"date/single","value":"start_date","target":["variable",["template-tag","start"]]},
-                {"id":"952ddad7-da28-44ef-bb00-f20871d02a55","type":"date/single","value":"end_date","target":["variable",["template-tag","end"]]}
+                {"id":"952ddad7-da28-44ef-bb00-f20871d02a55","type":"date/single","value":"end_date","target":["variable",["template-tag","end"]]},
+                {"id":"786ee2aa-67f6-4494-b153-0c999b0080eb","type":"category","value":["month"],"target":["variable", ["template-tag", "aggr"]]}
             ],
         },
 
