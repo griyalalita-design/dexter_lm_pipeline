@@ -222,10 +222,10 @@ def transform_completion_timeslot (df_raw):
         return df_raw
     tracker_df = (
     df_raw
-    .groupby(["date", "dest_hub_name"], as_index=False)
+    .groupby(["sla_date", "dest_hub_name"], as_index=False)
     .agg({
-        "hit_completion":"sum",
-        "tracking_id": "count"
+        "total_nc_hit":"sum",
+        "total_vol": "sum"
     })
     .sort_values("dest_hub_name")
 )
