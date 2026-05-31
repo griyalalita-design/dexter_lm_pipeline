@@ -231,6 +231,30 @@ def transform_completion_timeslot (df_raw):
 )
 
     return tracker_df
+
+def transform_rdo_rtd(df_raw):
+    if df_raw.empty:
+        return df_raw
+
+    cols = [
+        "bundle_tracking_id",
+        "rdo_tracking_id",
+        "hub_name",
+        "hub_region",
+        "fwd_success_datetime",
+        "add_to_shipment_datetime",
+        "orig_shipment_van_inbound_datetime",
+        "sla_ats_days",
+        "sla_vi_days",
+        "sla_ats_hit_flag",
+        "sla_vi_hit_flag"  
+    ]
+
+    missing_cols = [c for c in cols if c not in df_raw.columns]
+    if missing_cols:
+        raise ValueError(f"Kolom RDO tidak ditemukan: {missing_cols}")
+
+    return df_raw[cols].copy()
     
 
 
