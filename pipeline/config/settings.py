@@ -370,7 +370,7 @@ METABASE_CONFIG = {
       
         "completion_within_timeslot": {
             "url": "https://metabase.ninjavan.co/api/card/124081/query/json",
-            "report_type": "fm",
+            "report_type": "lm",
             "common_params_template": [
                 {"id":"370cf3c3-3e21-4af9-98f4-58ddce2fb3cc","type":"string/=","value":"b2b_sds_dry_cold_prem","target":["dimension",["template-tag","sds_instant"]]},
                 {"id":"45c4636d-b5ea-4e91-ac1c-d39eb785f808","type":"string/=","value":"b2b_sds_dry_cold_reg","target":["dimension",["template-tag","sds_reg"]]},
@@ -392,7 +392,7 @@ METABASE_CONFIG = {
 
         "no_rsvn_completed": {
             "url": "https://metabase.ninjavan.co/api/card/122256/query/json",
-            "report_type": "fm",
+            "report_type": "lm",
             "common_params_template": [
                 {"id": "190fb3a4-e6cb-4b4e-a78b-f4acb7cc5448", "type": "category", "value": "month", "target": ["variable", ["template-tag", "aggr"]]},
                 {"id": "26473b49-9801-4240-ade1-6c07b7851c2a", "type": "date/single", "value": "start_end", "target": ["variable", ["template-tag", "start_date"]]},
