@@ -17,6 +17,7 @@ from utils.transform import (
     transform_poda,
     transform_pu_rot,
     transform_td6,
+    transform_rdo_rtd,
 )
 
 
@@ -287,6 +288,7 @@ def run():
         "td6_4pl": transform_td6,
         "td6_aggregator": transform_td6,
         "td6_shop_laz": transform_td6,
+        "rdo_rtd_b2b": transform_rdo_rtd,
     }
 
     tracker_results = {}
@@ -306,8 +308,8 @@ def run():
             tracker_results[result_key] = pd.DataFrame()
 
     # DIRECT TO TRACKER - no transform
-    if "rdo_rtd_b2b" in results:
-        tracker_results["rdo_rtd_b2b"] = results["rdo_rtd_b2b"]
+    # if "rdo_rtd_b2b" in results:
+    #     tracker_results["rdo_rtd_b2b"] = results["rdo_rtd_b2b"]
 
     print("\nSummary tracker output shapes:")
     for key, df in tracker_results.items():
