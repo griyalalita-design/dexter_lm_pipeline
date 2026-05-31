@@ -199,6 +199,12 @@ def should_skip_report(report_key):
 
     url = METABASE_CONFIG["lm"][report_key].get("url", "")
     return not url or "PASTE_" in url
+    
+def sanitize_for_sheet(df: pd.DataFrame) -> pd.DataFrame:
+    cleaned = df.copy()
+    cleaned = cleaned.replace([float("inf"), float("-inf")], pd.NA)
+    cleaned = cleaned.where(pd.notna(cleaned), "")
+    return cleaned
 
 
 def run():
@@ -400,7 +406,7 @@ def run():
             print(f"[SKIP WRITE] {result_key}: not found in tracker_results")
             continue
 
-        df_to_write = tracker_results[result_key]
+        df_to_write = sanitize_for_sheet(tracker_results[result_key])
 
         if df_to_write.empty:
             print(f"[SKIP WRITE] {result_key}: dataframe empty")
