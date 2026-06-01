@@ -271,6 +271,16 @@ GSHEET = {
         }
     },
 
+    "lm_email": {
+        "url": "https://docs.google.com/spreadsheets/d/1zmZ3h43SHFiZHJpHosWxjcL1MjEB5aHU_t-O4UI0j38/edit?gid=0#gid=0",
+        "sheet_id": "1zmZ3h43SHFiZHJpHosWxjcL1MjEB5aHU_t-O4UI0j38",
+        "tabs": {
+            "to": "To",
+            "cc": "CC",
+            "bcc": "BCC"
+        }
+    },
+
     # Gsheet config — tempat kamu simpen Metabase token
     "config": {
         "sheet_id": "1RJK6GFPVrourpdF91GQ1DWuxBBn2a9_SndoyraXckZ4",
