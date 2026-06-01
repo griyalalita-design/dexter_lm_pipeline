@@ -272,13 +272,14 @@ GSHEET = {
     },
 
     "lm_email": {
-        "url": "https://docs.google.com/spreadsheets/d/1zmZ3h43SHFiZHJpHosWxjcL1MjEB5aHU_t-O4UI0j38/edit?gid=0#gid=0",
-        "sheet_id": "1zmZ3h43SHFiZHJpHosWxjcL1MjEB5aHU_t-O4UI0j38",
+        "sheet_id": "ISI_SHEET_ID_GSHEET_EMAIL",
         "tabs": {
-            "to": "To",
+            "to_gj": "To GJ",
+            "to_sum": "To SUM",
+            "to_java": "To Java",
             "cc": "CC",
-            "bcc": "BCC"
-        }
+            "bcc": "BCC",
+        },
     },
 
     # Gsheet config — tempat kamu simpen Metabase token
