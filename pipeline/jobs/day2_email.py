@@ -3,12 +3,12 @@ from __future__ import annotations
 import re
 import smtplib
 import ssl
+from datetime import datetime, timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from datetime import datetime, timedelta
 
-from utils.gsheet import read_sheet, get_cell_value
 from config.settings import GSHEET
+from utils.gsheet import get_cell_value, read_sheet
 
 
 SENDER_DISPLAY_NAME = "ID BI-Reporting"
@@ -17,54 +17,110 @@ SENDER_ALIAS_EMAIL = "id-bi-reporting@ninjavan.co"
 SMTP_HOST = "smtp.gmail.com"
 SMTP_PORT = 465
 
-# hardcode links
-METABASE_URL = "https://docs.google.com/spreadsheets/d/10jwwERVKLvdrk7tkmqVXeZHGp3Q1lV_2IjFsc6fXQhQ/edit?gid=26110973#gid=26110973"
-SOSIALISASI_URL = "https://docs.google.com/presentation/d/1uUuU5E4crqCGKUeeAwQlq18pLSqVEWl6VMrgqiGbK8k/edit?slide=id.g3530d417fc4_0_85#slide=id.g3530d417fc4_0_85"
-TEMPLATE_URL = "https://docs.google.com/spreadsheets/d/13EgXGBtwCU-ppzoMvCMGbRqa-yVAOEY6gBqQJoHfMQc/edit?gid=390142677#gid=390142677"
+
+# =========================
+# HARD CODE LINKS - LM
+# =========================
+SANGGAHAN_XCLD_URL = "https://docs.google.com/spreadsheets/d/1qT43zxKQu22_rOAJeub5nUhnYvd_SAlj9MM__ZBuXFI/edit?gid=542671156#gid=542671156"
+SANGGAHAN_NON_XCLD_URL = "https://docs.google.com/spreadsheets/d/12AzOiRzyEYhNz4Emo9SVKMYKHgTuRIpDLhkQEoXxBig/edit?gid=1752095026#gid=1752095026"
+SANGGAHAN_CLUSTER_URL = "https://docs.google.com/spreadsheets/d/1BYJdyat9xLvY7QwdG-i0wfFYEUsQekXgaE32kGdnFrk/edit?gid=1562367482#gid=1562367482"
+
+
+EMAIL_JOBS = [
+    {
+        "area_label": "Sumatera",
+        "to_tab_key": "to_sum",
+        "sosialisasi_url": "https://docs.google.com/presentation/d/15hs0-s6g-UG1YePw8h7AnGofDfQKgmFY3PaUlDsF8Cs/edit?slide=id.g26651862b77_0_0#slide=id.g26651862b77_0_0",
+        "tracker_links": [
+            ("Tracker KPI Sumatera", "tracker_sum"),
+        ],
+    },
+    {
+        "area_label": "Greater Jakarta",
+        "to_tab_key": "to_gj",
+        "sosialisasi_url": "https://docs.google.com/presentation/d/1NcAs5Gc3kTT-BFnAmpWsKLI9nAMfAaDdTSmq-M7aQko/edit?slide=id.g3e49b9f3991_0_208#slide=id.g3e49b9f3991_0_208",
+        "tracker_links": [
+            ("Tracker KPI Greater Jakarta", "tracker_gj"),
+        ],
+    },
+    {
+        "area_label": "Java",
+        "to_tab_key": "to_java",
+        "sosialisasi_url": "https://docs.google.com/presentation/d/1FS3AHjrJQ4_heE4eibKp-x6XxszvYy9u5NSHHHcEXNA/edit?slide=id.g3e499e42712_0_0#slide=id.g3e499e42712_0_0",
+        "tracker_links": [
+            ("Tracker KPI West Java", "tracker_wj"),
+            ("Tracker KPI East Java", "tracker_ej"),
+            ("Tracker KPI Central Java", "tracker_cj"),
+        ],
+    },
+]
 
 
 def get_previous_month_label() -> str:
     months_id = [
         "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-        "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+        "Juli", "Agustus", "September", "Oktober", "November", "Desember",
     ]
+
     prev_month_date = datetime.today().replace(day=1) - timedelta(days=1)
+
     return f"{months_id[prev_month_date.month - 1]} {prev_month_date.year}"
 
 
 def is_recipient_format(value: str) -> bool:
     value = str(value or "").strip()
 
-    pattern_with_name = r'^.+<[^<>\s@]+@[^<>\s@]+\.[^<>\s@]+>$'
-    pattern_email_only = r'^[^\s@]+@[^\s@]+\.[^\s@]+$'
+    pattern_with_name = r"^.+<[^<>\s@]+@[^<>\s@]+\.[^<>\s@]+>$"
+    pattern_email_only = r"^[^\s@]+@[^\s@]+\.[^\s@]+$"
 
     return bool(
-        re.match(pattern_with_name, value) or
-        re.match(pattern_email_only, value)
+        re.match(pattern_with_name, value)
+        or re.match(pattern_email_only, value)
     )
 
 
-def get_recipients_from_sheet(spreadsheet_id: str, sheet_name: str) -> list[str]:
-    df = read_sheet(spreadsheet_id, sheet_name)
+def get_recipients_from_tab(tab_key: str) -> list[str]:
+    email_cfg = GSHEET["lm_email"]
+
+    df = read_sheet(
+        email_cfg["sheet_id"],
+        email_cfg["tabs"][tab_key],
+    )
+
     if df.empty:
         return []
 
     first_col = df.columns[0]
-    values = df[first_col].astype(str).str.strip().tolist()
+
+    values = (
+        df[first_col]
+        .dropna()
+        .astype(str)
+        .str.strip()
+        .tolist()
+    )
 
     recipients = [x for x in values if is_recipient_format(x)]
 
     seen = set()
-    uniq = []
-    for r in recipients:
-        if r not in seen:
-            seen.add(r)
-            uniq.append(r)
+    unique_recipients = []
 
-    return uniq
+    for recipient in recipients:
+        if recipient not in seen:
+            seen.add(recipient)
+            unique_recipients.append(recipient)
+
+    return unique_recipients
 
 
-def get_email_sender_from_config():
+def get_lm_shared_recipients() -> tuple[list[str], list[str]]:
+    cc_recipients = get_recipients_from_tab("cc")
+    bcc_recipients = get_recipients_from_tab("bcc")
+
+    return cc_recipients, bcc_recipients
+
+
+def get_email_sender_from_config() -> tuple[str, str]:
     config_sheet = GSHEET["config"]
 
     email_sender = get_cell_value(
@@ -80,64 +136,137 @@ def get_email_sender_from_config():
     )
 
     if not email_sender:
-        raise ValueError("Email sender kosong di config sheet (B14).")
+        raise ValueError("Email sender kosong di config sheet B14.")
     if not app_password_sender:
-        raise ValueError("App password sender kosong di config sheet (C14).")
+        raise ValueError("App password sender kosong di config sheet C14.")
 
     return email_sender, app_password_sender
 
 
-def build_html_sort_email(
-    period_label: str,
-    tracker_url: str,
-    metabase_url: str,
-    sosialisasi_url: str,
-    sanggahan_url: str,
-    template_url: str,
-) -> str:
-    blue_color = "#1a73e8"
-    red_color = "#c62828"
-    link_common_style = f'style="color:{blue_color};text-decoration:underline;font-weight:600"'
-    link_red_style = f'style="color:{red_color};text-decoration:underline;font-weight:700"'
+def build_link(url: str, text: str, color: str = "#1a73e8") -> str:
+    return (
+        f'<a href="{url}" target="_blank" '
+        f'style="color:{color};text-decoration:underline;font-weight:600">'
+        f"{text}</a>"
+    )
 
-    tracker_html = f'<a href="{tracker_url}" target="_blank" {link_common_style}>ID SORT KPI Tracker LINK</a>'
-    metabase_html = f'<a href="{metabase_url}" target="_blank" {link_common_style}>LINK METABASE</a>'
-    sosialisasi_html = f'<a href="{sosialisasi_url}" target="_blank" {link_common_style}>LINK SOSIALISASI</a>'
-    sanggahan_html = f'<a href="{sanggahan_url}" target="_blank" {link_red_style}>LINK SANGGAHAN</a>'
-    template_html = f'<a href="{template_url}" target="_blank" {link_common_style}>LINK TEMPLATE</a>'
+
+def build_tracker_links_html(tracker_links: list[tuple[str, str]]) -> str:
+    rows = []
+
+    for label, tracker_key in tracker_links:
+        tracker_url = GSHEET[tracker_key]["url"]
+        rows.append(build_link(tracker_url, label))
+
+    return "<br>".join(rows)
+
+
+def build_tracker_links_text(tracker_links: list[tuple[str, str]]) -> str:
+    rows = []
+
+    for label, tracker_key in tracker_links:
+        tracker_url = GSHEET[tracker_key]["url"]
+        rows.append(f"{label}: {tracker_url}")
+
+    return "\n".join(rows)
+
+
+def build_html_lm_email(
+    period_label: str,
+    tracker_links: list[tuple[str, str]],
+    sosialisasi_url: str,
+) -> str:
+    red_color = "#c62828"
+
+    tracker_html = build_tracker_links_html(tracker_links)
+
+    sosialisasi = build_link(sosialisasi_url, "LINK SOSIALISASI")
+    sanggahan_xcld = build_link(
+        SANGGAHAN_XCLD_URL,
+        "Sanggahan XCLD",
+        red_color,
+    )
+    sanggahan_non_xcld = build_link(
+        SANGGAHAN_NON_XCLD_URL,
+        "Sanggahan Non XCLD",
+        red_color,
+    )
+    sanggahan_cluster = build_link(
+        SANGGAHAN_CLUSTER_URL,
+        "Sanggahan",
+        red_color,
+    )
 
     return f"""
     <html>
     <body style="font-family: Arial, sans-serif; font-size: 13.5px; color: #222; line-height: 1.55;">
       <p>Dear all,</p>
 
-      <p>Berikut adalah link untuk sheet <b>SORT KPI Tracker</b> periode <b>{period_label}</b>: {tracker_html}</p>
-      <p>Berikut juga link <b>Metabase</b> yang dapat digunakan untuk menarik data secara mandiri untuk monitoring harian: {metabase_html}</p>
+      <p>Berikut adalah LINK untuk KPI performa bulan <b>{period_label}</b>.</p>
 
-      <p>Untuk monitoring performance harian yang belum di-update di tracker bisa diakses secara mandiri dari link-link pada gsheet di atas.</p>
+      <p>
+        {tracker_html}
+      </p>
 
-      <p><b>NOTE:</b></p>
-      <ul>
-        <li>Perhitungan KPI Sort menggunakan skema penyesuaian KPI Sort terbaru. Perubahan parameter mengikuti sosialisasi pada link berikut: {sosialisasi_html}.</li>
-        <li>Sanggahan dibuka pada tanggal <b>2–12 setiap bulannya</b>, dan sanggahan dapat langsung dilakukan melalui google sheet berikut: {sanggahan_html}.</li>
-        <li>Wajib menggunakan template yang sudah disediakan pada link terkait ({template_html}) dengan mengisi raw data dan summary secara lengkap. Jika tidak sesuai, sanggahan ditolak.</li>
-        <li>Selain data dari Metabase, sanggahan akan ditolak.</li>
-        <li>Mohon isi data dengan lengkap dan jelas untuk memudahkan tim dalam validasi sanggahan. Jika terdapat sanggahan melalui email maka sanggahan tidak akan diterima.</li>
-      </ul>
+      <p>
+        Perhitungan KPI menggunakan skema penyesuaian KPI terbaru menyesuaikan sosialisasi pada link berikut:
+        {sosialisasi}
+      </p>
 
-      <p>Untuk teman-teman Sort FST, <b>@FST Sort (ID)</b>, jika ada sort team yang terlewat di email ini mohon dibantu informasikan langsung ke tim terkait untuk tracker dan link Metabase-nya.</p>
+      <p><b>Sanggahan</b></p>
+
+      <p>
+        Khusus untuk sanggahan XCLD, mohon diinput TRID di {sanggahan_xcld}<br>
+        Untuk sanggahan selain XCLD, dapat diinput di link berikut:<br>
+        Station Level : {sanggahan_non_xcld}<br>
+        Cluster Level : {sanggahan_cluster}
+      </p>
+
+      <p>
+        Sanggahan harus diisi max tanggal <b>12 setiap bulannya</b>, lewat dari waktu yang ditentukan,
+        gsheet akan terkunci dan sanggahan tidak diterima.
+      </p>
+
+      <p style="color:{red_color};">
+        <b>*Mohon kerjasamanya untuk memastikan setiap sanggahan ditulis pada gsheet karena sanggahan yang tidak diinput tidak akan dihitung dalam KPI.</b>
+      </p>
+
+      <p>
+        Kepada teman-teman RM, AM, Ops Spec, CH, Station feel free untuk meneruskan ke tim pickup terkait
+        apabila ada yang terlewat dan menginformasikan apabila terdapat hub baru yang belum dimasukkan ke dalam tracker ini.
+      </p>
+
+      <br>
 
       <p>Terima kasih.</p>
+
       <p>Regards,<br><b>BI-Reporting</b></p>
     </body>
     </html>
     """
 
 
-def build_plain_text(period_label: str) -> str:
+def build_plain_text(
+    period_label: str,
+    tracker_links: list[tuple[str, str]],
+    sosialisasi_url: str,
+) -> str:
+    tracker_text = build_tracker_links_text(tracker_links)
+
     return (
         f"Dear all,\n\n"
-        f"Berikut adalah email SORT KPI untuk periode {period_label}.\n\n"
+        f"Berikut adalah LINK untuk KPI performa bulan {period_label}.\n\n"
+        f"{tracker_text}\n\n"
+        f"Perhitungan KPI menggunakan skema penyesuaian KPI terbaru menyesuaikan sosialisasi pada link berikut: {sosialisasi_url}\n\n"
+        f"Sanggahan\n"
+        f"Khusus untuk sanggahan XCLD, mohon diinput TRID di Sanggahan XCLD: {SANGGAHAN_XCLD_URL}\n"
+        f"Untuk sanggahan selain XCLD, dapat diinput di link berikut:\n"
+        f"Station Level: {SANGGAHAN_NON_XCLD_URL}\n"
+        f"Cluster Level: {SANGGAHAN_CLUSTER_URL}\n\n"
+        f"Sanggahan harus diisi max tanggal 12 setiap bulannya, lewat dari waktu yang ditentukan, gsheet akan terkunci dan sanggahan tidak diterima.\n\n"
+        f"*Mohon kerjasamanya untuk memastikan setiap sanggahan ditulis pada gsheet karena sanggahan yang tidak diinput tidak akan dihitung dalam KPI.\n\n"
+        f"Kepada teman-teman RM, AM, Ops Spec, CH, Station feel free untuk meneruskan ke tim pickup terkait apabila ada yang terlewat dan menginformasikan apabila terdapat hub baru yang belum dimasukkan ke dalam tracker ini.\n\n"
+        f"Terima kasih.\n\n"
         f"Regards,\n"
         f"BI-Reporting"
     )
@@ -147,72 +276,98 @@ def send_email_chunked(
     smtp_user: str,
     smtp_password: str,
     to_recipients: list[str],
+    cc_recipients: list[str],
+    bcc_recipients: list[str],
     subject: str,
     html_body: str,
     plain_body: str,
     chunk_size: int = 50,
 ) -> None:
+    if not to_recipients:
+        raise ValueError("To recipients kosong.")
+
     context = ssl.create_default_context()
 
     for i in range(0, len(to_recipients), chunk_size):
-        chunk = to_recipients[i:i + chunk_size]
+        to_chunk = to_recipients[i:i + chunk_size]
 
         msg = MIMEMultipart("alternative")
         msg["Subject"] = subject
         msg["From"] = f"{SENDER_DISPLAY_NAME} <{SENDER_ALIAS_EMAIL}>"
-        msg["To"] = ", ".join(chunk)
+        msg["To"] = ", ".join(to_chunk)
+
+        if cc_recipients:
+            msg["Cc"] = ", ".join(cc_recipients)
+
+        all_recipients = to_chunk + cc_recipients + bcc_recipients
 
         msg.attach(MIMEText(plain_body, "plain", "utf-8"))
         msg.attach(MIMEText(html_body, "html", "utf-8"))
 
         with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, context=context) as server:
             server.login(smtp_user, smtp_password)
-            server.sendmail(smtp_user, chunk, msg.as_string())
+            server.sendmail(smtp_user, all_recipients, msg.as_string())
 
-        print(f"Sent chunk {i // chunk_size + 1}: {len(chunk)} recipients")
+        print(
+            f"Sent chunk {i // chunk_size + 1}: "
+            f"To={len(to_chunk)}, CC={len(cc_recipients)}, BCC={len(bcc_recipients)}"
+        )
 
 
 def run():
-    print("=== DAY 2 EMAIL START ===")
+    print("=== DAY 2 LM EMAIL START ===")
 
     smtp_user, smtp_password = get_email_sender_from_config()
 
-    recipients = get_recipients_from_sheet(
-        GSHEET["tracker"]["sheet_id"],
-        GSHEET["tracker"]["tabs"]["recipients"]
-    )
-
-    if not recipients:
-        raise ValueError("Tab Recipients kosong atau tidak ada recipient valid.")
+    cc_recipients, bcc_recipients = get_lm_shared_recipients()
 
     period_label = get_previous_month_label()
-    subject = f"(ID) Sort KPI Progressive Tiering - {period_label}"
 
-    html_body = build_html_sort_email(
-        period_label=period_label,
-        tracker_url=GSHEET["tracker"]["url"],
-        metabase_url=METABASE_URL,
-        sosialisasi_url=SOSIALISASI_URL,
-        sanggahan_url=GSHEET["sanggahan"]["url"],
-        template_url=TEMPLATE_URL,
-    )
+    for job in EMAIL_JOBS:
+        area_label = job["area_label"]
+        to_tab_key = job["to_tab_key"]
+        tracker_links = job["tracker_links"]
+        sosialisasi_url = job["sosialisasi_url"]
 
-    plain_body = build_plain_text(period_label)
+        to_recipients = get_recipients_from_tab(to_tab_key)
 
-    print(f"Recipients count: {len(recipients)}")
-    print(f"Subject: {subject}")
+        if not to_recipients:
+            print(f"[SKIP] {area_label}: To recipients kosong")
+            continue
 
-    send_email_chunked(
-        smtp_user=smtp_user,
-        smtp_password=smtp_password,
-        to_recipients=recipients,
-        subject=subject,
-        html_body=html_body,
-        plain_body=plain_body,
-        chunk_size=50,
-    )
+        subject = f"(ID) LM KPI Progressive Tiering {area_label} - {period_label}"
 
-    print("=== DAY 2 EMAIL DONE ===")
+        html_body = build_html_lm_email(
+            period_label=period_label,
+            tracker_links=tracker_links,
+            sosialisasi_url=sosialisasi_url,
+        )
+
+        plain_body = build_plain_text(
+            period_label=period_label,
+            tracker_links=tracker_links,
+            sosialisasi_url=sosialisasi_url,
+        )
+
+        print(f"\nSending {area_label}")
+        print(f"To count: {len(to_recipients)}")
+        print(f"CC count: {len(cc_recipients)}")
+        print(f"BCC count: {len(bcc_recipients)}")
+        print(f"Subject: {subject}")
+
+        send_email_chunked(
+            smtp_user=smtp_user,
+            smtp_password=smtp_password,
+            to_recipients=to_recipients,
+            cc_recipients=cc_recipients,
+            bcc_recipients=bcc_recipients,
+            subject=subject,
+            html_body=html_body,
+            plain_body=plain_body,
+            chunk_size=50,
+        )
+
+    print("=== DAY 2 LM EMAIL DONE ===")
 
 
 if __name__ == "__main__":
