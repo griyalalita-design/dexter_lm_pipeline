@@ -272,7 +272,7 @@ GSHEET = {
     },
 
     "lm_email": {
-        "sheet_id": "ISI_SHEET_ID_GSHEET_EMAIL",
+        "sheet_id": "1zmZ3h43SHFiZHJpHosWxjcL1MjEB5aHU_t-O4UI0j38",
         "tabs": {
             "to_gj": "To GJ",
             "to_sum": "To SUM",
