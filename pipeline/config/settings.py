@@ -196,7 +196,7 @@ GSHEET = {
         "url": "https://docs.google.com/spreadsheets/d/1SfuuEEld68rTpGtsoufTGfpgo0k9SljoZJ5hdHR7_t0/edit?gid=0#gid=0",
         "sheet_id": "1SfuuEEld68rTpGtsoufTGfpgo0k9SljoZJ5hdHR7_t0",
         "tabs": {
-            "main": "USE THIS", # sesuaikan nama tab
+            "main": "Use Summary", # sesuaikan nama tab
         }
     },
 
