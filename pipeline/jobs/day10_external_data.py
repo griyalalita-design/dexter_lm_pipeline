@@ -21,6 +21,8 @@ def run():
     )
 
     print("===== Ambil data dari PODA done =====")
+
+    
     print("====== Kita Kerjain Day 10 Buat OVER MP ya =========")
 
     df_over_mp_fte = read_sheet(
@@ -29,6 +31,18 @@ def run():
     )
 
     print("===== Ambil data dari OVER MP done =====")
+
+    print("====== Kita Kerjain Day 10 Buat Vol ya =========")
+
+    df_vol = read_sheet(
+        GSHEET["vol"]["sheet_id"],
+        GSHEET["vol"]["tabs"]["main"]
+    )
+
+    print("===== Ambil data dari vol done =====")
+
+
+    
 
     print("===== Mulai input RDO ke Tracker dulu ya =====")
     write_sheet(
@@ -141,9 +155,47 @@ def run():
         sheet_name=GSHEET["tracker_ej"]["tabs"]["raw_data_cost"],
         df=df_over_mp_fte,
         start_cell="AA6",
-        include_header=Falsese
+        include_header=False
     )
     print("===== Done Input OVER MP ke Tracker =====")
+
+    print("===== Mulai input vol ke Tracker dulu ya =====")
+    write_sheet(
+        spreadsheet_id=GSHEET["tracker_gj"]["sheet_id"],
+        sheet_name=GSHEET["tracker_gj"]["tabs"]["raw_data_cost"],
+        df=df_vol,
+        start_cell="v6",
+        include_header=False
+    )
+    write_sheet(
+        spreadsheet_id=GSHEET["tracker_sum"]["sheet_id"],
+        sheet_name=GSHEET["tracker_sum"]["tabs"]["raw_data_cost"],
+        df=df_vol,
+        start_cell="v6",
+        include_header=False
+    )
+    write_sheet(
+        spreadsheet_id=GSHEET["tracker_wj"]["sheet_id"],
+        sheet_name=GSHEET["tracker_wj"]["tabs"]["raw_data_cost"],
+        df=df_vol,
+        start_cell="v6",
+        include_header=False
+    )
+    write_sheet(
+        spreadsheet_id=GSHEET["tracker_cj"]["sheet_id"],
+        sheet_name=GSHEET["tracker_cj"]["tabs"]["raw_data_cost"],
+        df=df_vol,
+        start_cell="v6",
+        include_header=False
+    )
+    write_sheet(
+        spreadsheet_id=GSHEET["tracker_ej"]["sheet_id"],
+        sheet_name=GSHEET["tracker_ej"]["tabs"]["raw_data_cost"],
+        df=df_vol,
+        start_cell="v6",
+        include_header=False
+    )
+    print("===== Done Input Vol ke Tracker =====")
 
 
 
