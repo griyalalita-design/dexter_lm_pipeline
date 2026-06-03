@@ -57,24 +57,24 @@ SHIPPER_GROUPS = {
 
 
 LM_REPORT_PLAN = [
-    # {"report_key": "attempt_n0", "segment_key": "agg_fsbd"},
-    # {"report_key": "attempt_n0", "segment_key": "b2c_cc_agg_fsbd"},
-    # {"report_key": "attempt_n0", "segment_key": "laz_shop_tt"},
-    # {"report_key": "n0_completion", "segment_key": "b2b_all_b2c_cc"},
-    # {"report_key": "n0_completion", "segment_key": "b2b_dry_cc_next"},
-    # {"report_key": "n0_completion", "segment_key": "tt"},
-    # {"report_key": "n1_completion"},
-    # {"report_key": "completion_within_timeslot"},
+    {"report_key": "attempt_n0", "segment_key": "agg_fsbd"},
+    {"report_key": "attempt_n0", "segment_key": "b2c_cc_agg_fsbd"},
+    {"report_key": "attempt_n0", "segment_key": "laz_shop_tt"},
+    {"report_key": "n0_completion", "segment_key": "b2b_all_b2c_cc"},
+    {"report_key": "n0_completion", "segment_key": "b2b_dry_cc_next"},
+    {"report_key": "n0_completion", "segment_key": "tt"},
+    {"report_key": "n1_completion"},
+    {"report_key": "completion_within_timeslot"},
     {"report_key": "lnd_b2b_all_b2c_cc"},
     {"report_key": "no_rsvn_completed"},
     {"report_key": "no_rsvn_completed", "segment_key": "b2br_key_shipper"},
     {"report_key": "no_rsvn_completed", "segment_key": "sds_cc"},
     {"report_key": "poda_val_sho_laz"},
     {"report_key": "pu_rot"},
-    # {"report_key": "td6", "segment_key": "4pl"},
-    # {"report_key": "td6", "segment_key": "aggregator"},
-    # {"report_key": "td6", "segment_key": "shop_laz"},
-    # {"report_key": "rdo_rtd_b2b"},
+    {"report_key": "td6", "segment_key": "4pl"},
+    {"report_key": "td6", "segment_key": "aggregator"},
+    {"report_key": "td6", "segment_key": "shop_laz"},
+    {"report_key": "rdo_rtd_b2b"},
 ]
 
 
