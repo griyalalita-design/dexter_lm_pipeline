@@ -441,7 +441,7 @@ METABASE_CONFIG = {
             "report_type": "lm",
             "common_params_template": [
                 {"id":"8d72da7f-6a48-4384-a283-a1c81db37e2d","type":"date/single","value":"end_date","target":["variable",["template-tag","end_date"]]},
-                {"id":"f1fca7d5-bddb-42ce-9771-1f17b2c6a1ec","type":"string/=","value":["CDA Driver","Driver","Freelance CDA Driver","Freelance Driver","Junior Coldchain Driver"],"target":["dimension",["template-tag","route_driver_type"]]},
+                {"id":"f1fca7d5-bddb-42ce-9771-1f17b2c6a1ec","type":"string/=","value":"driver_list","target":["dimension",["template-tag","route_driver_type"]]},
                 {"id":"6980e48f-126e-48d9-a0d3-da79bbd63751","type":"string/=","value":"b2br_key_shipper","target":["dimension",["template-tag","shipper_id"]]},
                 {"id":"190fb3a4-e6cb-4b4e-a78b-f4acb7cc5448","type":"category","value":["month"],"target":["variable",["template-tag","aggr"]]},
                 {"id":"ecfc3da2-aca6-4303-bb42-aa3f9a21810d","type":"string/contains","value":["B2BR"],"options":{"case-sensitive":False},"target":["dimension",["template-tag","pickup_tags"]]},
