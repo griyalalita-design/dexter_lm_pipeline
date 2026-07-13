@@ -247,7 +247,14 @@ def transform_rdo_rtd(df_raw):
         "sla_ats_days",
         "sla_vi_days",
         "sla_ats_hit_flag",
-        "sla_vi_hit_flag"  
+        "sla_vi_hit_flag",
+        "first_valid_delivery_attempt_datetime",
+        "sla_ats_days",	
+        "sla_vi_days",	
+        "sla_fa_days",	
+        "sla_ats_hit_flag",	
+        "sla_vi_hit_flag",	
+        "sla_fa_hit_flag"
     ]
 
     missing_cols = [c for c in cols if c not in df_raw.columns]
