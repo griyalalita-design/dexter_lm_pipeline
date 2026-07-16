@@ -178,7 +178,7 @@ GSHEET = {
         "url": "https://docs.google.com/spreadsheets/d/1rXE9SdjCRppdN0Zfp2YYhB84PMst_-PM0NMygtg0ifY/edit?gid=848641983#gid=848641983",
         "sheet_id": "1rXE9SdjCRppdN0Zfp2YYhB84PMst_-PM0NMygtg0ifY",
         "tabs": {
-            "main": "USE THIS", # sesuaikan nama tab
+            "main": "For Input", # sesuaikan nama tab
         }
     },
 
@@ -187,7 +187,7 @@ GSHEET = {
         "url": "https://docs.google.com/spreadsheets/d/1Y_1X89Wg0CvJE9HerIZQTQMkUpwPouqjIeuUPqUACRc/edit?gid=1936719192#gid=1936719192",
         "sheet_id": "1Y_1X89Wg0CvJE9HerIZQTQMkUpwPouqjIeuUPqUACRc",
         "tabs": {
-            "main": "USE THIS", # sesuaikan nama tab
+            "main": "For Input", # sesuaikan nama tab
         }
     },
 
